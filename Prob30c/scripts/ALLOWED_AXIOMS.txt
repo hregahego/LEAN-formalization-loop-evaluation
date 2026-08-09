@@ -1,0 +1,7 @@
+# Axiom allowlist for Prob30c, derived from USER_NOTES.md by the SETUP agent.
+#
+# USER_NOTES.md says: "None -- no assumed axioms."
+# The list below is therefore EMPTY: scripts/verify.py permits only the three
+# standard axioms {propext, Classical.choice, Quot.sound} for every
+# Prob30c.Solution.<theorem>, and bans every `axiom` declaration in the project.
+# Lines starting with '#' are comments; there are no axiom names on any line.

@@ -1,0 +1,27 @@
+# setup-architect  @ 2026-08-09T13:29:09Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/GPTP6-refactors
+# output_format: text
+
+Scaffolding complete. `BLUEPRINT.md` and `scripts/harness.json` written; `PROGRESS.md`/`TASKS.md`/`REVIEW.md`/`verify.py` deliberately left to `setup.py`. `USER_NOTES.md` says "None — no assumed axioms", so `final_theorem`/`mandatory_axioms` are omitted and the strict default policy applies.
+
+**(a) Project source-dir / root namespace:** `TreeIrred`
+
+**(b) Frozen theorem names** (in stage order, matching `harness.json` byte for byte):
+
+1. `form_gram_entries` — the defined form really is the sketch's Gram matrix (diag `w`, `−1` on edges, `0` else)
+2. `norm_one_irreducible` — Lemma 1, abstract positive definite integral lattice
+3. `capacity_node_formula` — Lemma 2's recursion `γ = 1/(w − Σγᵢ)`
+4. `capacity_denom_pos` — `0 < w(ρ) − Σγᵢ`
+5. `capacity_pos` — `0 < γ(C)`
+6. `capacity_lt_one` — `γ(C) < 1`
+7. `capacity_spec` — the dual vector `ρ#` exists with `B(ρ#,y) = y_ρ`, `(ρ#)² = γ`, i.e. `γ = (Q_C⁻¹)_{ρρ}` without matrices
+8. `admissible_posDef` — admissible ⇒ positive definite (the clause dropped from `Admissible`)
+9. `rooted_estimate` — **Lemma 3, the milestone**
+10. `admissible_root_bound` — Corollary 1
+11. `exists_reroot_at` — re-rooting preserves `verts`/`wt`/`deg`/`B`
+12. `pointed_root_irreducible` — Theorem 1 with the bad vertex at the root
+13. `tree_has_irreducible_vertex` — **headline**, Theorem 1 verbatim
+
+Key modeling decisions recorded in the blueprint: labelled nested-inductive `RTree` with lattice `ℕ → ℤ` (labels never move, so re-rooting preserves the form *on the nose*); `NonzeroOn`/`Reducible` phrased relative to `verts T` (the junk-support trap); `deg` read off `edges` as the genuine unrooted degree; `γ` defined by the Schur recursion with `capacity_spec` as the repayment; positive definiteness dropped from `Admissible` and proved instead; and Corollary 1 derived from Lemma 3 at `k = 1`/`k = −1` rather than via Cauchy–Schwarz, which removes ℝ, inner-product spaces, and matrix inverses from the dependency set entirely.
+
+# exit=0 timed_out=False @ 2026-08-09T13:48:01Z

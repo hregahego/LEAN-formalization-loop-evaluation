@@ -1,0 +1,19 @@
+{
+  "project": "TreeIrred",
+  "problem": "Problem 6 - a positive definite weighted tree with a unique vertex of weight below its degree contains an irreducible vertex",
+  "theorems": [
+    "form_gram_entries",
+    "norm_one_irreducible",
+    "capacity_node_formula",
+    "capacity_denom_pos",
+    "capacity_pos",
+    "capacity_lt_one",
+    "capacity_spec",
+    "admissible_posDef",
+    "rooted_estimate",
+    "admissible_root_bound",
+    "exists_reroot_at",
+    "pointed_root_irreducible",
+    "tree_has_irreducible_vertex"
+  ]
+}

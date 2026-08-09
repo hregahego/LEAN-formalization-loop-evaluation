@@ -1,0 +1,11 @@
+# iter002-worker1  @ 2026-08-06T17:57:44Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Both assigned tasks are complete and verified.
+
+**Task 1 (REVIEW.md's top follow-up — re-export the five proved frozen theorems).** I added the two missing imports (`Prob20.Proofs.Domain.Frac`, `Prob20.Proofs.Theta.MemIntMv`) to `Prob20/Solution.lean`, restated frozen #1 `D_isDomain`, #2 `mem_Dom_iff_mem_max_or_sub_one_mem_max`, #4 `D_isFractionRing`, #5 `theta_apply_tprod` and #6 `theta_mem_intMv` verbatim in `namespace Prob20.Solution` (with `open scoped TensorProduct` for #6's `⨂[·]`), each `:= Prob20.<name>_proof`, and added the five `example : @Prob20.<name> = @Prob20.Solution.<name> := rfl` no-drift gates in `Prob20/Discharge.lean`. `lake build Prob20.Solution Prob20.Discharge` succeeds with zero errors and zero warnings outside the 17 expected frozen-`sorry` lines, and `#print axioms` on all five `Prob20.Solution.*` names is exactly `[propext, Classical.choice, Quot.sound]`. No statement was weakened; the other 12 frozen theorems remain untouched.
+
+**Task 2 (Stage E1 — the residue hom).** In `Prob20/Proofs/Injectivity/Basic.lean` I built `rho : ↥Dom →+* ZMod 2` (`d ↦ 0` on `maxSet`, `1` otherwise) together with `rho_eq_zero_iff` and `rho_sub_mem_max`, plus the named helper `inj_one_not_mem_max : (1 : K) ∉ maxSet`. Rather than a four-way `ZMod 2` split, all four ring-hom laws come from one characterising property `(d : K) - algebraMap (ZMod 2) K (rho d) ∈ maxSet` (from frozen #2) and its uniqueness converse: `map_add` is `(d - ā) + (e - b̄)`, `map_mul` is `e·(d - ā) + ā·(e - b̄) = de - (ab)‾` with both summands in `𝔪` since `𝔪` is a `↥T`-submodule and `Dom ≤ T`. All 15 declarations build warning-free with `#print axioms = [propext, Classical.choice, Quot.sound]`, every line is ≤ 100 characters, and the guardrails `rho 0 = 0`, `rho 1 = 1`, `rho ⟨piK, _⟩ = 0` compile. I deliberately declared no `Module ↥Dom (ZMod 2)` instance in any form (diamond risk with `Algebra ↥Dom K`; Stage E3 should install it locally) and did not attempt E2–E6, which depend on Stage D still in flight. Both `✅` entries are appended to `PROGRESS.md`.
+
+# exit=0 timed_out=False @ 2026-08-06T18:05:29Z

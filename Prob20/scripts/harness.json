@@ -1,0 +1,23 @@
+{
+  "project": "Prob20",
+  "problem": "Problem 20 (\u03b8_n : Int(D)^\u2297n \u2192 Int(D^n) is neither injective nor surjective)",
+  "theorems": [
+    "D_isDomain",
+    "mem_Dom_iff_mem_max_or_sub_one_mem_max",
+    "D_isLocalRing",
+    "D_isFractionRing",
+    "theta_apply_tprod",
+    "theta_mem_intMv",
+    "p_eval_mem_max",
+    "smul_p_mem_int",
+    "g_mem_int",
+    "bigP_mem_intMv",
+    "p_not_mem_max_int",
+    "t_mul_p_not_mem_max_int",
+    "t_add_one_mul_p_not_mem_max_int",
+    "theta_not_injective",
+    "bigP_not_mem_range",
+    "theta_not_surjective",
+    "theta_not_injective_not_surjective"
+  ]
+}

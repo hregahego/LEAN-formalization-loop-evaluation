@@ -1,0 +1,13 @@
+import TreeIrred.Defs
+import TreeIrred.Theorems
+import TreeIrred.Proofs.Model.Basic
+import TreeIrred.Proofs.NormOne.Basic
+import TreeIrred.Proofs.Capacity.Basic
+import TreeIrred.Proofs.PosDef.Basic
+import TreeIrred.Proofs.RootedEstimate.Basic
+import TreeIrred.Proofs.RootBound.Basic
+import TreeIrred.Proofs.Reroot.Basic
+import TreeIrred.Proofs.Pointed.Basic
+import TreeIrred.Proofs.Main.Basic
+import TreeIrred.Solution
+import TreeIrred.Discharge

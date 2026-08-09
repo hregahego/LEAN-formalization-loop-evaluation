@@ -1,0 +1,34 @@
+# init-step-minus1  @ 2026-08-09T00:15:41Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Erdos477-refactors
+# output_format: text
+
+SETUP (Part −1) is complete.
+
+## Project
+
+**`Erdos477`** — namespace `Erdos477`, toolchain `leanprover/lean4:v4.31.0`, Mathlib pinned at rev `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (tag `v4.31.0`, matching toolchain); `lake exe cache get` hit, no Mathlib source build.
+
+Layout matches BLUEPRINT exactly: `Erdos477/{Defs,Theorems,Solution,Discharge}.lean`, `Erdos477/Proofs/{Elementary,Cofactor,FunctionField,HeathBrown,BadShift,Greedy,Assembly}/Basic.lean` placeholders, root `Erdos477.lean` importing everything.
+
+## Frozen theorem names (16, all `:= sorry`)
+
+`zero_mem_Bset`, `Dset_neg_mem`, `pow13_inj`, `mem_Bset_of_rat_pow13`, `sub_pow13_mem_Dset_iff`, `Qcof_ge_half_max_pow12`, `abs_pow13_sub_pow13_ge`, `bm_forms_height_bound`, `no_nonconstant_param_of_not_pow13`, `no_rational_param_of_not_mem_Bset`, `no_linear_param`, `hb_diagonal_count`, `badShift_bound`, `greedy_tiling`, `good_shift_exists`, `erdos_477`
+
+## Axioms (exactly the two USER_NOTES permits, in `Defs.lean`, general form)
+
+`Erdos477.brownawell_masser_P1_four_term` (Thm 2.1, general `r ≥ 3`) and `Erdos477.heath_brown_diagonal_13` (Thm 2.2, general nonsingular ternary form of degree `k ≥ 3`, `A` bound before `∃ C`). Both written to `scripts/ALLOWED_AXIOMS.txt`.
+
+## Build
+
+`lake build` exits 0 with **0 errors, 16 warnings — all `Erdos477/Theorems.lean: declaration uses 'sorry'`**, one per frozen theorem, and nothing else. Before freezing I ran the BLUEPRINT chart guardrails (`ordP none X = -1`, `ordP (some 0) X = 1`, `ordP _ (C 5) = 0` in both charts, `13/10 = 1`) — all compile, so `ordP`/`IsProjZero` share the intended convention. Note `Polynomial.rootMultiplicity` takes the root first, so `Defs.lean` writes `Polynomial.rootMultiplicity a f.num`.
+
+## verify.py
+
+- Check 1 SHA pins — **PASS** (both frozen files pinned and matching)
+- Check 2 banned keywords — **PASS** (`sorry` only in `Theorems.lean`; both axioms allowlisted)
+- Check 3 clean build — **PASS**
+- Checks 4 / 5b — **FAIL, as expected**: `Erdos477.Solution.*` does not exist yet while every proof is `sorry`. (Check 5's module-compile part passes.)
+
+One deviation worth flagging: I removed `weak.linter.mathlibStandardSet = true` from the `lake new … math` template's `lakefile.toml`. verify.py check 3 fails on *any* warning, and that set is Mathlib's contribution-style checker (copyright headers, line length, `open scoped Classical` — which BLUEPRINT mandates in both frozen files), so leaving it on would make cosmetic complaints indistinguishable from real failures for every future worker. All soundness-relevant core linters, including the `sorry` warning check 3 keys on, remain on. This is recorded in the `📝` PROGRESS entry, along with all the modeling decisions and both axioms. `scripts/control_manifest.sha256` was refreshed for `frozen.sha256` and `ALLOWED_AXIOMS.txt` (the files init writes). No Stage A+ proof was started.
+
+# exit=0 timed_out=False @ 2026-08-09T00:28:11Z

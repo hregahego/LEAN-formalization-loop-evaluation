@@ -1,0 +1,38 @@
+# Lean 4 formalization projects — track sources and provenance, not build output.
+#
+# Tracked on purpose (do NOT add ignore rules for these):
+#   *.lean                      the proofs and frozen Defs/Theorems
+#   *.md                        SKETCH, BLUEPRINT, PROGRESS, REVIEW, TASKS, USER_NOTES
+#   lakefile.toml               build config
+#   lean-toolchain              exact Lean version pin
+#   lake-manifest.json          exact Mathlib revision pin  (reproducibility)
+#   scripts/                    verify.py + frozen.sha256 + control_manifest.sha256
+#                               + ALLOWED_AXIOMS.txt + harness.json  (the anti-cheat
+#                               harness and its pins — these make the proofs auditable)
+#   logs/                       agent transcripts + verify_log.jsonl  (provenance trail)
+
+# ---- Lean / Lake build output ------------------------------------------------
+# Holds the compiled project AND the full Mathlib dependency tree (~7.5 GB each,
+# ~52 GB total here). Entirely reconstructible: `lake exe cache get && lake build`.
+.lake/
+
+# Lake build artifacts that can appear outside .lake/
+*.olean
+*.ilean
+*.trace
+*.hash
+
+# Legacy Lake layout (pre-.lake), harmless to keep listed
+/build/
+lakefile.olean
+
+# ---- Python (scripts/verify.py) ---------------------------------------------
+__pycache__/
+*.py[cod]
+
+# ---- OS / editor noise -------------------------------------------------------
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/

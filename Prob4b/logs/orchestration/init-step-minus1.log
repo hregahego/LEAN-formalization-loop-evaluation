@@ -1,0 +1,23 @@
+# init-step-minus1  @ 2026-08-09T16:11:54Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob4b-refactors
+# output_format: text
+
+SETUP (BLUEPRINT Part −1) is complete.
+
+**Project name:** `Prob4b` — namespace `Prob4b`, root import file `Prob4b.lean`, source dir `Prob4b/`.
+Toolchain pinned to `leanprover/lean4:v4.31.0`; Mathlib pinned to `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` in both `lakefile.toml` and `lake-manifest.json`; `lake exe cache get` used (Mathlib never built from source).
+
+**Frozen theorem names** (all `:= sorry` in `Prob4b/Theorems.lean`, in stage order):
+`B_nontrivial`, `B_relation`, `B_isNoetherianRing`, `B_maximalIdeal_pow_three`, `B_colon_two_gen`, `B_triple_inter_eq_bot`, `M_ann_eq`, `M_pair_inter`, `M_u_ne_zero`, `M_u_mem_triple`, `M_triple_defect`, `C_isNoetherianRing`, `C_ann_eq`, `C_pair_inter`, `C_triple_defect`, `R_finiteConductor`, `R_triple_inter_not_fg`, `R_not_quasiCoherent`, `quasiCoherent_imp_finiteConductor`, `exists_finiteConductor_not_quasiCoherent`.
+
+**Build:** `lake build` → *Build completed successfully (8569 jobs)*, 0 errors, exactly 20 `declaration uses 'sorry'` warnings, all from `Prob4b/Theorems.lean`, and no other warnings.
+
+Notes worth carrying forward:
+- `Defs.lean` holds D0–D5 exactly as blueprinted, sorry-free (the five `Subring` closure fields for `Rsub` are proved inline). One forced adjustment, made *before* freezing and logged: at this Mathlib rev `TrivSqZeroExt.inlHom Balg Mmod` is already a `Balg →+* Cring`, so `iota` is that term directly (blueprint D4's `.toRingHom` does not exist there); D4 explicitly authorises this adjustment.
+- **No axioms.** `USER_NOTES.md` permits none, so no `axiom` appears anywhere and `scripts/ALLOWED_AXIOMS.txt` is an empty (comment-only) allowlist.
+- `scripts/frozen.sha256` pins both frozen files; `scripts/control_manifest.sha256` refreshed for the two files init owns.
+- `Solution.lean` is a stub whose 20 restatements currently forward to the frozen `sorry` statements (clearly marked); `Discharge.lean` carries no gates yet.
+
+**`scripts/verify.py`:** Check 1 (SHA pins) PASS, Check 2 (banned keywords, `sorry` only in `Theorems.lean`) PASS, Check 3 (clean build) PASS, Check 5/5b (Discharge + Solution compile, all 20 statements bind to `Prob4b.Solution.*`) PASS. Check 4 FAILs with `sorryAx` on all 20 — the expected state with every proof still `sorry`. Two PROGRESS entries (`✅` + `📝`) plus one appended correction record all of this.
+
+# exit=0 timed_out=False @ 2026-08-09T16:29:28Z

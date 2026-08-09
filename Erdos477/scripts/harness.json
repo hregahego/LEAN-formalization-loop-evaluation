@@ -1,0 +1,27 @@
+{
+  "project": "Erdos477",
+  "problem": "Erdos Problem 477 (thirteenth powers have a tiling complement in the integers)",
+  "theorems": [
+    "zero_mem_Bset",
+    "Dset_neg_mem",
+    "pow13_inj",
+    "mem_Bset_of_rat_pow13",
+    "sub_pow13_mem_Dset_iff",
+    "Qcof_ge_half_max_pow12",
+    "abs_pow13_sub_pow13_ge",
+    "bm_forms_height_bound",
+    "no_nonconstant_param_of_not_pow13",
+    "no_rational_param_of_not_mem_Bset",
+    "no_linear_param",
+    "hb_diagonal_count",
+    "badShift_bound",
+    "greedy_tiling",
+    "good_shift_exists",
+    "erdos_477"
+  ],
+  "final_theorem": "erdos_477",
+  "mandatory_axioms": [
+    "Erdos477.heath_brown_diagonal_13",
+    "Erdos477.brownawell_masser_P1_four_term"
+  ]
+}

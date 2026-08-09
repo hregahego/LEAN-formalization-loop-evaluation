@@ -1,0 +1,29 @@
+# setup-architect  @ 2026-08-06T12:53:54Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Scaffolding complete. `BLUEPRINT.md` (1041 lines) and `scripts/harness.json` are written; `PROGRESS.md`/`TASKS.md`/`REVIEW.md`/`verify.py` deliberately left to `setup.py`.
+
+**(a) Project source-dir / root namespace:** `Prob20`
+
+**(b) Frozen theorem names** (in stage order — byte-identical in `harness.json`):
+
+| Stage | Frozen names |
+|---|---|
+| A `Proofs/Domain/` | `D_isDomain`, `mem_Dom_iff_mem_max_or_sub_one_mem_max`, `D_isLocalRing`, `D_isFractionRing` |
+| B `Proofs/Theta/` | `theta_apply_tprod`, `theta_mem_intMv` |
+| C `Proofs/KeyPolys/` | `p_eval_mem_max`, `smul_p_mem_int`, `g_mem_int`, `bigP_mem_intMv` |
+| D `Proofs/Vanishing/` ★ | `p_not_mem_max_int`, `t_mul_p_not_mem_max_int`, `t_add_one_mul_p_not_mem_max_int` |
+| E `Proofs/Injectivity/` | `theta_not_injective` |
+| F `Proofs/Surjectivity/` | `bigP_not_mem_range`, `theta_not_surjective` |
+| G `Proofs/Headline/` | `theta_not_injective_not_surjective` (headline) |
+
+`final_theorem`/`mandatory_axioms` are omitted — `USER_NOTES.md` permits no assumed certificates, so check 4b is skipped and `ALLOWED_AXIOMS.txt` stays empty.
+
+Three things worth flagging about the design, all recorded in the blueprint rather than left implicit:
+
+- **The sketch's two "valuation arguments" are replaced by one explicit lemma** (Stage D.3): for `f ∈ Int(D)` with `f(0)=0`, `f(u_N) − f(0) ∈ 𝔪` for the test points `u_N = t(t+1)^N` once `N` is large. Non-injectivity and non-surjectivity are both corollaries of it. The `∀ᶠ N` is load-bearing — the all-`u ∈ 𝔪` version is not known, and the cheat-watch box forbids it.
+- **`θₙ` is frozen as a `D`-linear map into the ambient `MvPolynomial`**, not as an `AlgHom` into `↥Int(Dⁿ)` (a corestriction would need an unproved lemma inside `Defs.lean`). Faithfulness is carried by two mandatory frozen theorems: `theta_apply_tprod` pins θ to `f₁⊗⋯⊗fₙ ↦ ∏ fᵢ(Xᵢ)` (without it the zero map would "answer" the problem) and `theta_mem_intMv` puts the range in `Int(Dⁿ)`.
+- **"Noetherian" and "dimension one" are not frozen.** They are adjectives on the witness, not part of Problem 20's question, and proving them needs Eakin–Nagata plus `ringKrullDim` for no gain in the answer. Trap #6 in the Notes states this as a scope decision and confirms no frozen statement is weaker than its sketch claim; `D_isDomain`, `D_isLocalRing`, `D_isFractionRing` and the `D/𝔪 ≅ 𝔽₂` statement are all frozen.
+
+# exit=0 timed_out=False @ 2026-08-06T13:26:50Z

@@ -1,0 +1,8 @@
+# Axiom allowlist for Prob20, derived from USER_NOTES.md by SETUP.
+#
+# USER_NOTES.md says: "None — no assumed axioms."
+#
+# This allowlist is therefore EMPTY: the only axioms any solved theorem may
+# depend on are the Lean/Mathlib standard three (propext, Classical.choice,
+# Quot.sound), and no `axiom` declaration may appear anywhere in the project.
+# Every other axiom is banned by scripts/verify.py (Checks 2 and 4).

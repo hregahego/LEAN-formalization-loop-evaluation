@@ -1,0 +1,9 @@
+# Axiom allowlist for the EntropyBound formalization.
+#
+# USER_NOTES.md says: "None -- no assumed axioms."
+# This allowlist is therefore EMPTY: no `axiom` declaration may appear anywhere in the
+# project, and every solved theorem must depend only on the three standard Lean/Mathlib
+# axioms {propext, Classical.choice, Quot.sound}.
+#
+# In particular the two interval-arithmetic obligations `Ader_lower_middle` (#35) and
+# `diagonal_middle` (#43) must be genuinely proved, not assumed.

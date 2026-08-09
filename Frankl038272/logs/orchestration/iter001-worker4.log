@@ -1,0 +1,13 @@
+# iter001-worker4  @ 2026-08-09T00:53:53Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/EntropyBound-refactors
+# output_format: text
+
+Done. Final state verified with a full `lake build` and `#print axioms` on all eight theorems.
+
+## Report
+
+I completed **all six theorems assigned to Agent 4 plus both stretch goals** — eight frozen theorems in total, all compiling with `#print axioms … = [propext, Classical.choice, Quot.sound]`.
+
+In the new file `EntropyBound/Proofs/Toolbox/Poly.lean` I discharged BLUEPRINT B9: `Ppoly_pos` (#17) by showing both factors of the frozen factored form are `≥ 1` on `[0,1]`; `Npoly_eq_deriv_form` (#18) for **all** real `z` by building `hasDerivAt_Ppoly` explicitly from `hasDerivAt_pow`/`HasDerivAt.const_mul` on the power basis and closing with `ring` — this confirms SKETCH (4a)'s frozen coefficient table of `Npoly` is an exact transcription of `P - (1-z)P'`; and `gprofile_sq_eq` (#19) via the reusable support lemma `gprof_radicand_eq : (1 + (81/100)(1-s)²)(1 - s²(1+(81/100)(1-s)²)) = (1-s)·Ppoly s`, which makes the radicand nonnegative so `Real.sq_sqrt` applies without touching the frozen `gprof`. In `EntropyBound/Proofs/ProfileSpeed/Bernstein.lean` I proved the two degree-10 Bernstein expansions `Gpoly_bernstein_left/right` (#28, #29) — they go through by `simp only [...]; push_cast; ring` in ~15 s once you know that `norm_num` will not evaluate `Nat.choose` on numerals (I tabulated the eleven values as `rfl` lemmas) — and `Gpoly_pos` (#30) as a genuine certificate: `bern_nonneg`, `sum_bern_ten_eq_one` from `add_pow`, all 22 coefficients bounded below by `bMin = 2530002779/840000000`, and an explicit `z ≤ 1/2` vs `z > 1/2` split. Both mandated guardrails (`Gpoly 0 = 5023/100`, `Gpoly 1 = 28`) compile. Finally, in the hub `ProfileSpeed/Basic.lean` I got both stretch items: `gprofile_speed_le` (#31) with the exact constant `16/5` (not weakened), and `gprofile_hasDerivAt` (#20) via the local identity `gprof (1-u²) = 2u√(P(1-u²))` on `(0,1)` transported by `HasDerivAt.congr_of_eventuallyEq` — the frozen statement itself is never restricted. No `sorry`, no new `axiom`, no banned tactic; all helpers live in `namespace EntropyBound.ProfileSpeed`; I edited only my three files. This leaves #32 `gprofile_lipschitz` fully unblocked for a follow-up agent, and hands Stage C its `gprofile_sq_eq` dependency for #23.
+
+# exit=0 timed_out=False @ 2026-08-09T01:09:27Z

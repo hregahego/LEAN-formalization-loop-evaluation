@@ -1,0 +1,13 @@
+# iter003-worker2  @ 2026-08-06T19:01:50Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Scratch files removed; only my assigned file was modified.
+
+## Report
+
+I completed **BLUEPRINT Stage E2–E6** in `Prob20/Proofs/Injectivity/Basic.lean`, delivering frozen statement **#14 `theta_not_injective`** as `Prob20.theta_not_injective_proof`, copied verbatim from `Prob20/Theorems.lean:68-69`. The build is clean (`lake build` → "Build completed successfully (8573 jobs)", the only warnings being the 17 expected `sorry` lines in the frozen `Theorems.lean`; my module has zero warnings), `example : @Prob20.theta_not_injective = @Prob20.theta_not_injective_proof := rfl` typechecks, and `#print axioms` on the main theorem and every significant helper is exactly `[propext, Classical.choice, Quot.sound]`. No `sorry`, no new `axiom`, no banned tactic, all lines ≤ 100 characters.
+
+The argument: `𝔪·Int(D)` is repackaged as an 𝔽₂-submodule `inj_N` of the ambient `K[X]` (legitimate because an 𝔽₂-scalar is 0 or 1), so `V := K[X] ⧸ inj_N` is an 𝔽₂-vector space with no `zmodModule`/`IsScalarTower` plumbing — a cheaper route than the blueprint's quotient of `↥IntD`, with the same mathematics. `inj_kappa : (Fin 2 → ZMod 2) →ₗ[ZMod 2] V` sending the basis to `p̄, (tp)‾` has trivial kernel precisely because of the ✅ frozen #11/#12/#13 (its three nonzero combinations are `p`, `tp`, `(t+1)p`); `LinearMap.exists_leftInverse_of_injective` splits it, yielding the coordinate functionals `Λ = inj_Lin 0`, `Μ = inj_Lin 1`, whose `↥Dom`-linearity is `inj_mkQ_smul` (from iteration 2's `rho_sub_mem_max`, since `C((d:K) − ρd)·f` is a `maxSmulInt` generator). With `ν f = ρ(f(0))` and a **file-local** `Algebra ↥Dom (ZMod 2) := rho.toAlgebra` (verified not to leak to importers — `#synth` fails downstream, so no diamond with `Algebra ↥Dom K`), `Ψ` is built as `mkPiAlgebra.compLinearMap` so multilinearity is free, and `Φ = PiTensorProduct.lift Ψ` gives `Φ(tprod a) = 1`, `Φ(tprod b) = 0` (both included as the required guardrail `example`s). Hence `τ = tprod a − tprod b ≠ 0` while `θ τ = 0` by frozen #5. All four Stage-E cheat-watch items hold: `τ ≠ 0` comes only from `Φ`, `Λ`/`Μ` are derived from #11–#13 rather than postulated, the same `τ` padded with `1`s serves every `n`, and the conclusion is `¬ Function.Injective` itself. This unblocks Agent 1's re-export of #14 and Stage G (#17) once Agent 3's `theta_not_surjective_proof` lands.
+
+# exit=0 timed_out=False @ 2026-08-06T19:17:07Z

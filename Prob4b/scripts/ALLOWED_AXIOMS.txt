@@ -1,0 +1,6 @@
+# Axiom allowlist read by scripts/verify.py (Check 2 and Check 4).
+#
+# USER_NOTES.md for this run says: "None - no assumed axioms."
+# The allowlist is therefore EMPTY: the only admissible axioms anywhere are the
+# Lean/Mathlib standard three (propext, Classical.choice, Quot.sound), and no
+# `axiom` declaration may appear in any first-party .lean file.

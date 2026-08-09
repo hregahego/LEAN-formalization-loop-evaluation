@@ -1,0 +1,21 @@
+{
+  "project": "Prob30c",
+  "problem": "Problem 30(c): polynomial extension can raise the absorbing number, refuting Anderson-Badawi C2",
+  "theorems": [
+    "mem_polyExt_iff",
+    "isNAbsorbing_succ",
+    "Jid_pow_three_eq_bot",
+    "Jid_sq_eq_Wid",
+    "isNoetherianRing_A",
+    "s_component_cancellation",
+    "not_isNAbsorbing_A_q",
+    "fPoly_mul_gPoly",
+    "not_isNAbsorbing_polyExt_A_succ_q",
+    "isNAbsorbing_A_succ_q",
+    "isNAbsorbing_polyExt_A_succ_succ_q",
+    "omegaAbs_A",
+    "omegaAbs_polyExt_A",
+    "gap_family",
+    "polyAbsorbingConj_false"
+  ]
+}

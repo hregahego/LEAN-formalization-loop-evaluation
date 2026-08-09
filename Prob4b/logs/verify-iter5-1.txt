@@ -1,0 +1,41 @@
+=== Verifying Prob4b formalization ===
+  Target: --all
+
+--- Check 1: Frozen SHA pins ---
+PASS: Prob4b/Defs.lean pin matches
+PASS: Prob4b/Theorems.lean pin matches
+
+--- Check 2: Banned keywords ---
+PASS: no banned keywords (sorry allowed only in Theorems.lean)
+
+--- Check 3: lake build ---
+PASS: build clean (only expected Theorems.lean sorry warnings)
+
+--- Check 4: #print axioms ---
+PASS: B_nontrivial — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: B_relation — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: B_isNoetherianRing — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: B_maximalIdeal_pow_three — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: B_colon_two_gen — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: B_triple_inter_eq_bot — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: M_ann_eq — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: M_pair_inter — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: M_u_ne_zero — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: M_u_mem_triple — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: M_triple_defect — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: C_isNoetherianRing — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: C_ann_eq — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: C_pair_inter — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: C_triple_defect — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: R_finiteConductor — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: R_triple_inter_not_fg — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: R_not_quasiCoherent — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: quasiCoherent_imp_finiteConductor — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+PASS: exists_finiteConductor_not_quasiCoherent — axioms within allowlist: [Classical.choice, Quot.sound, propext]
+
+--- Check 5: Statement gates ---
+PASS: Prob4b.Discharge compiles
+PASS: Prob4b.Solution compiles
+PASS: all 20 frozen statement(s) bind to Prob4b.Solution.*
+
+=== RESULT: PASS (0 issue(s), 26s) ===

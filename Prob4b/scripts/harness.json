@@ -1,0 +1,26 @@
+{
+  "project": "Prob4b",
+  "problem": "Problem 4(b): a finite-conductor ring that is not quasi-coherent",
+  "theorems": [
+    "B_nontrivial",
+    "B_relation",
+    "B_isNoetherianRing",
+    "B_maximalIdeal_pow_three",
+    "B_colon_two_gen",
+    "B_triple_inter_eq_bot",
+    "M_ann_eq",
+    "M_pair_inter",
+    "M_u_ne_zero",
+    "M_u_mem_triple",
+    "M_triple_defect",
+    "C_isNoetherianRing",
+    "C_ann_eq",
+    "C_pair_inter",
+    "C_triple_defect",
+    "R_finiteConductor",
+    "R_triple_inter_not_fg",
+    "R_not_quasiCoherent",
+    "quasiCoherent_imp_finiteConductor",
+    "exists_finiteConductor_not_quasiCoherent"
+  ]
+}

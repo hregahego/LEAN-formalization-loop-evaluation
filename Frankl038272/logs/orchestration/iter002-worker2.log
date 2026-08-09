@@ -1,0 +1,15 @@
+# iter002-worker2  @ 2026-08-09T01:26:22Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/EntropyBound-refactors
+# output_format: text
+
+All four assigned items landed, each compiling cleanly with `#print axioms` = `[propext, Classical.choice, Quot.sound]`.
+
+**Stage C is closed.** `EntropyBound/Proofs/RankOne/Product.lean` (new, imported from `RankOne/Basic.lean`) proves `diag_normalization_proof` (#23) — both sides nonnegative, so I matched squares through `gprofile_sq_eq_proof` (#19) and the `ring`-true support lemma `RankOne.diag_sq_eq`, then used `Real.sqrt_sq`/`Real.sqrt_mul` — and `rank_one_product_bound_proof` (#27): the determinant identity (#25) plus `0 ≤ s²t²(s-t)²·Rpoly s t` (from #26) gives `q(s,s)(1-q(s,s))·q(t,t)(1-q(t,t)) ≤ (q(s,t)(1-q(s,t)))²`; taking square roots (legal since `q(1-q) ≥ 0` by #22) and rewriting both diagonal factors by #23 yields `s·t·g(s)·g(t) ≤ 4·q(1-q)`, which `Real.log_pos` and `binEntropy_parabola_lower_proof` (#6) convert into the frozen bound on the full closed square, boundary `g(1)=0` included, with the `Real.log 2` factor untouched.
+
+**Stage D is closed.** `gprofile_lipschitz_proof` (#32), appended to `ProfileSpeed/Basic.lean`, applies `Convex.norm_image_sub_le_of_norm_hasDerivWithin_le` to `φ u = gprof (1-u²)` on `Set.Icc 0 1`. The endpoints needed two new endpoint-inclusive support lemmas (`ProfileSpeed.gprof_one_sub_sq_of_nonneg`, needing only `0 ≤ u`, and `ProfileSpeed.hasDerivAt_psi`, hypothesized on `1-u² ∈ [0,1]` rather than `0<u<1`), transported by `HasDerivWithinAt.congr`; `gprofile_speed_le_proof` (#31) supplies `‖φ'‖ ≤ 16/5` exactly, not enlarged. Because the MVT lemma is symmetric in its two points, both orderings `s ≤ t` and `t ≤ s` come out of the single application rather than being waved through as symmetry.
+
+**Support item.** `Constants.logTail_of_le_one` was added (add-only) to `Constants/LogEnclose.lean` for `0 < a ≤ 1` via `abs_of_nonpos`; I smoke-tested outside the project that it evaluates (`logHi (1/2) 3 = -842/1215 + 1/6804`, giving `Real.log (1/2) ≤ -842/1215 + 1/6804`), so G4/E3 can now enclose `log a` for rational `a < 1` directly instead of going through `a⁻¹` and `Real.log_inv`.
+
+One thing to flag: a whole-project `lake build` is currently red, but not from my files — `Toolbox/Aseries.lean` (Agent 1) and `FiniteEntropy/Core.lean` (Agent 4) were mid-edit. I deliberately imported `Toolbox.Parabola` directly rather than the `Toolbox.Basic` hub so Stage C doesn't inherit that breakage. `Defs.lean`/`Theorems.lean` SHAs still match `scripts/frozen.sha256`.
+
+# exit=0 timed_out=False @ 2026-08-09T01:37:49Z

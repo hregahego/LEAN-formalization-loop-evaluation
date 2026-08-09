@@ -1,0 +1,9 @@
+# iter001-worker2  @ 2026-08-09T14:10:26Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/GPTP6-refactors
+# output_format: text
+
+Stage B is done.
+
+**Report.** My assignment (TASKS.md Iteration 1, Agent 2) was Stage B / item B1: frozen theorem #2 `norm_one_irreducible` (Theorems.lean:22-26, SKETCH.md Lemma 1), in `TreeIrred/Proofs/NormOne/Basic.lean` only. After the onboarding ritual (TASKS.md, PROGRESS.md end-to-end — including the 📝 decisions about well-founded `vwts`/`edges`/`gamma` and the empty axiom allowlist — BLUEPRINT Stage B with its Cheat-watch box, SKETCH.md Lemma 1, `USER_NOTES.md`, `scripts/ALLOWED_AXIOMS.txt`) I appended a `🔧 in progress` claim, then wrote two generic helpers inside a nested `namespace NormOne` — `add_right` (additivity in the second argument, derived from `hadd` + `hsymm`) and `expand_add` (`F (a+b) (a+b) = F a a + 2 * F a b + F b b`) — and the top-level `norm_one_irreducible_proof`, proved by `rintro ⟨a, b, ha, hb, rfl, hab⟩`, `hpd a ha`, `hpd b hb`, rewriting `hx` by the expansion, and `omega`; the integrality step `0 < F a a ⟹ 1 ≤ F a a` comes from the codomain being ℤ, not from any added hypothesis. `lake build TreeIrred.Proofs.NormOne.Basic` succeeds with no errors and no warnings; `#print axioms TreeIrred.norm_one_irreducible_proof` gives `[propext, Quot.sound]` (a subset of the standard three, no custom axiom); and in a scratch file run with `lake env lean` (not committed to the project) `example : @TreeIrred.norm_one_irreducible = @TreeIrred.norm_one_irreducible_proof := rfl` type-checks, confirming the type is character-for-character the frozen one. The Cheat-watch constraints hold: `M` stays an abstract `AddCommGroup` with no `Module ℤ`/freeness/finite-rank/`BilinForm` and no specialisation, `0 ≤ F a b` was not strengthened, and no hypothesis was added. No frozen or shared file was touched, and no other agent's `Proofs/` file was imported.
+
+# exit=0 timed_out=False @ 2026-08-09T14:12:50Z

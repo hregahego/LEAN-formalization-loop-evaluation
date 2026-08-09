@@ -1,0 +1,7 @@
+# Axiom allowlist for this project — read by scripts/verify.py.
+#
+# USER_NOTES.md says: "None — no assumed axioms."  The allowlist is therefore
+# EMPTY: the only axioms any solved theorem may depend on are the Lean/Mathlib
+# standard three (propext, Classical.choice, Quot.sound), which verify.py permits
+# implicitly. Every other axiom — and every `axiom` declaration anywhere in the
+# project — is banned.

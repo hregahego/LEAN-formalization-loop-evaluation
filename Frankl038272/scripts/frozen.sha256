@@ -1,0 +1,4 @@
+# SHA-256 pins of the frozen files, recorded by the SETUP (init) agent after Defs.lean and
+# Theorems.lean were frozen. These two files are byte-frozen for the rest of the project.
+fa17143c6926cc65ad3b566fc14953d51bef26df6ad02c9d46931a58a7c64f0c  EntropyBound/Defs.lean
+24ddfa98fd6f37cace58debf91e3f7f90548e7b6f1c3fcecf0fb18aa48dc67b3  EntropyBound/Theorems.lean

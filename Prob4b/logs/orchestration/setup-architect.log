@@ -1,0 +1,27 @@
+# setup-architect  @ 2026-08-09T15:58:03Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob4b-refactors
+# output_format: text
+
+Scaffolding written. `PROGRESS.md`/`TASKS.md`/`REVIEW.md` and `verify.py` deliberately left for `setup.py` to render.
+
+**(a) Project source-dir / root namespace:** `Prob4b`
+
+**(b) Frozen theorem names** (in the stage order the blueprint proves them, matching `scripts/harness.json` byte for byte):
+
+| Stage | Names |
+|---|---|
+| A — the algebra `B` | `B_nontrivial`, `B_relation`, `B_isNoetherianRing`, `B_maximalIdeal_pow_three` |
+| B — the colon lemma (**milestone**) | `B_colon_two_gen`, `B_triple_inter_eq_bot` |
+| C — the module `M` | `M_ann_eq`, `M_pair_inter`, `M_u_ne_zero`, `M_u_mem_triple`, `M_triple_defect` |
+| D — the idealization `C = B ⋉ M` | `C_isNoetherianRing`, `C_ann_eq`, `C_pair_inter`, `C_triple_defect` |
+| E — the amplified ring `R` | `R_finiteConductor` |
+| F — headline | `R_triple_inter_not_fg`, `R_not_quasiCoherent`, `quasiCoherent_imp_finiteConductor`, `exists_finiteConductor_not_quasiCoherent` |
+
+Notes on the decisions worth flagging:
+
+- `USER_NOTES.md` still reads "None — no assumed axioms", so `final_theorem` and `mandatory_axioms` are **omitted** from `harness.json` and the blueprint bans every `axiom` declaration outright.
+- Two modeling calls drive everything else: `Balg` is the honest `MvPolynomial (Fin 4) (ZMod 2) ⧸ ((a,b,c,d)³ + (ad+bc))` quotient (free `CommRing` + Hilbert-basis Noetherianity, at the cost of being non-computable — hence Stage A must build an explicit `ZMod 2`-linear normal form `nf` with a 14-element monomial basis, which is the project's hardest engineering), and `Rsub` is defined intrinsically as the sequences cofinitely equal to a constant `iota x`.
+- I verified the three explicit witnesses for `u` by hand and recorded them in the blueprint so no later agent re-derives them: `u = b•![0,a+b,0,c+d]` and `u = (a+b)•![0,b,0,d]` are exact in `B⁴` (the second uses `ad = bc`), and `u = a•![b,b,d,d] + b•v`.
+- The blueprint explicitly forbids formalizing `Tor`: I checked that the sketch's `Tor₁ = 0` input is exactly `(I : m) = I + m²`, and Stage C derives both Step-2 identities from `B_colon_two_gen` in a few elementary lines instead.
+
+# exit=0 timed_out=False @ 2026-08-09T16:11:54Z

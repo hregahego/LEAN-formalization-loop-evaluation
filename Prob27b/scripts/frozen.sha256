@@ -1,0 +1,4 @@
+# SHA-256 pins of the frozen files, recorded by the SETUP agent after Defs.lean and
+# Theorems.lean were frozen. One "<sha256>  <PROJECT>/<file>.lean" line each.
+26d9b8e434d4ff9bcd1b5c4582a1e292c66e0c2586c4bd963406576c57e968e7  Prob27b/Defs.lean
+bca5594c9b2c7c34b3641f0ec8d2997cf1f2ba0fca70aaef12c5b71bb45b0525  Prob27b/Theorems.lean

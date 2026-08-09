@@ -1,0 +1,39 @@
+# init-step-minus1  @ 2026-08-09T13:48:01Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/GPTP6-refactors
+# output_format: text
+
+SETUP complete.
+
+## Project
+
+**`TreeIrred`** — Lean 4 + Mathlib project at the repo root (so `verify.py` finds `lakefile.toml` there).
+
+- `lean-toolchain` = `leanprover/lean4:v4.31.0`, byte-identical to `.lake/packages/mathlib/lean-toolchain`
+- Mathlib pinned at `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (tag `v4.31.0`); `lake exe cache get` reused 8538 cached oleans
+- Layout as prescribed: `TreeIrred/Defs.lean`, `TreeIrred/Theorems.lean`, nine `TreeIrred/Proofs/<Stage>/Basic.lean` placeholders (Model, NormOne, Capacity, PosDef, RootedEstimate, RootBound, Reroot, Pointed, Main), `Solution.lean` + `Discharge.lean` stubs, root `TreeIrred.lean` importing everything
+
+## Frozen theorem names (13, all `:= sorry`)
+
+`form_gram_entries`, `norm_one_irreducible`, `capacity_node_formula`, `capacity_denom_pos`, `capacity_pos`, `capacity_lt_one`, `capacity_spec`, `admissible_posDef`, `rooted_estimate`, `admissible_root_bound`, `exists_reroot_at`, `pointed_root_irreducible`, `tree_has_irreducible_vertex`
+
+`Defs.lean` freezes D1–D9 verbatim per BLUEPRINT, with **no `sorry` and no `axiom`** — `USER_NOTES.md` says "None — no assumed axioms", so `scripts/ALLOWED_AXIOMS.txt` is an empty (comment-only) allowlist.
+
+## Build
+
+`lake build` → **Build completed successfully (8572 jobs)**, exit 0. The only warnings are the 13 expected `declaration uses 'sorry'` from `Theorems.lean`. Two things needed fixing to get there:
+
+- `vwts`/`edges`/`gamma` need `decreasing_by simp_wf; have h := List.sizeOf_lt_of_mem t.2; omega`; `RTree.recAll` had to be `noncomputable` (a `Sort*` motive forces a classical `by_cases` in the cons case, and `deriving DecidableEq` has no handler for this nested inductive). Both recorded in PROGRESS.md.
+- `lakefile.toml`: added `weak.linter.style.header = false`. Mathlib's `mathlibStandardSet` includes the copyright-header linter, which warned on every module and would have failed Check 3. Only that cosmetic linter is off; `unusedVariables`, the style linters, and the `sorry` warnings all stay on. This is a deviation from the untouched generated lakefile, logged as a `📝` decision.
+
+Modeling was validated before freezing on `P := .node 0 2 [.node 1 2 [.node 2 2 []]]`: `verts P = [0,1,2]`, `deg P 1 = 2`, `deg P 0 = 1`, `B P (basis 0) (basis 1) = -1`, `B P (basis 0) (basis 2) = 0`, `B P (basis 1) (basis 1) = 2`, `gamma P = 3/4`. Note for Stage A: these need `simp`/`norm_num`, **not** `decide` — the `attach`-based definitions are well-founded, so they don't kernel-reduce.
+
+## `scripts/verify.py`
+
+- ✅ Check 1 (SHA pins): both `TreeIrred/Defs.lean` and `TreeIrred/Theorems.lean` pinned and matching
+- ✅ Check 2 (banned keywords): clean, `sorry` only in `Theorems.lean`
+- ✅ Check 3 (clean build): pass
+- ❌ Check 4 / ❌ Check 5b: expected at this stage — `TreeIrred.Solution.*` does not exist yet. (Check 5's module compiles half passed.)
+
+No Stage A+ proof was written; every frozen theorem is still `sorry`. `BLUEPRINT.md` and `SKETCH.md` untouched; `PROGRESS.md` appended with one `✅` and one `📝` entry at `2026-08-09T14:02:21Z`.
+
+# exit=0 timed_out=False @ 2026-08-09T14:03:33Z

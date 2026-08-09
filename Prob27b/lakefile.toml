@@ -1,0 +1,20 @@
+name = "Prob27b"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Prob27b"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+# Mathlib's copyright/authors header convention does not apply to this project.
+weak.linter.style.header = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.31.0"
+
+[[lean_lib]]
+name = "Prob27b"

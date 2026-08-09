@@ -1,0 +1,7 @@
+# SHA-256 of the files that define what verification MEANS.
+# Written by setup.py/init.py, re-checked by loop.py each iteration.
+# A mismatch means the harness or its config changed mid-run.
+89f9411c6d191cc8ac40635f7faeb9d0abd2e4d844989830f76dc67b399fc540  scripts/verify.py
+cf51b12f78080af19ae6dd5f57091026a64071d42de856fb9e1866d38df9efdb  scripts/harness.json
+55fd4973871b423d6f7cd221bec61793ff72b0e3e962bd40c7cc0e00282977cd  scripts/frozen.sha256
+d7e281c2d0087d7f46bac9a449e82c6217ed7f7ebb67dc1016931891abefc652  scripts/ALLOWED_AXIOMS.txt

@@ -1,0 +1,8 @@
+# Axiom allowlist for Prob27b, derived from USER_NOTES.md.
+#
+# USER_NOTES.md says: "None — no assumed axioms."
+#
+# This file therefore contains NO axiom names: the strict default policy applies.
+# Every declaration must depend only on the three standard Lean/Mathlib axioms
+# {propext, Classical.choice, Quot.sound}, and no `axiom` declaration may appear
+# anywhere in the project (Defs.lean declares none).

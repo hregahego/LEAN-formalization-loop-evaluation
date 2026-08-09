@@ -1,0 +1,15 @@
+import Erdos477.Defs
+import Erdos477.Theorems
+import Erdos477.Proofs.Elementary.Basic
+import Erdos477.Proofs.Cofactor.Basic
+import Erdos477.Proofs.FunctionField.Basic
+import Erdos477.Proofs.FunctionField.BMForms
+import Erdos477.Proofs.FunctionField.Lemma31
+import Erdos477.Proofs.FunctionField.Corollary32
+import Erdos477.Proofs.FunctionField.Linear
+import Erdos477.Proofs.HeathBrown.Basic
+import Erdos477.Proofs.BadShift.Basic
+import Erdos477.Proofs.Greedy.Basic
+import Erdos477.Proofs.Assembly.Basic
+import Erdos477.Solution
+import Erdos477.Discharge

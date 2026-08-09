@@ -1,0 +1,40 @@
+# setup-architect  @ 2026-08-09T15:58:02Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob30c-refactors
+# output_format: text
+
+Done. Two files written; `PROGRESS.md`/`TASKS.md`/`REVIEW.md` and `scripts/verify.py` deliberately left to `setup.py`.
+
+**Design summary of the decomposition** (the mathematics I committed to):
+
+- `A_q := Unitization D (Jmod)` with `D = Polynomial (ZMod 2)` — an explicit direct sum `D·1 ⊕ De₁ ⊕ De₂ ⊕ De₃ ⊕ Du₁ ⊕ Du₂ ⊕ (D/t^q)s`, *not* a quotient presentation, so no "the relations don't collapse" argument is needed and every ring axiom comes from Mathlib's `Unitization`.
+- The construction is parametric in the base `(B, τ)` on purpose: Stage F instantiates it at `B = D[X]`, `τ = C t`, which is what makes the sketch's hand-waved Step 6 ("repeating the valuation argument") actually provable, via a transfer isomorphism `A_q[X] ≅ Alg (D[X]) (C t) q`.
+- Step 2's char-2 obstruction reduces to a 64-case kernel `decide` over `(ZMod 2)^6`, and it enters the generic length bound as an **explicit hypothesis** `hcanc` — never a global fact — because it is *false* at the base `D[X]`; that asymmetry is the whole counterexample.
+- The sketch's valuation argument (`v = v_t(a)`, `Ann = t^{q-v}`) is rewritten to use only prime divisibility (`τ ∣ dᵢ` for every non-`J` factor ⟹ `τ^{m-2} ∣ (∏_{i≠i₀}dᵢ)·a`), so no `multiplicity` API is required. I also added the Case-0 (no factor in `J`) branch the sketch omits.
+
+(a) **Project source-dir / root namespace:** `Prob30c`
+
+(b) **Frozen theorem names** (in stage order, matching `scripts/harness.json` byte for byte):
+
+| # | name | sketch step |
+|---|------|-------------|
+| 1 | `mem_polyExt_iff` | Problem statement (`I[X]` faithfulness) |
+| 2 | `isNAbsorbing_succ` | Problem statement (`ω` = least `n`) |
+| 3 | `Jid_pow_three_eq_bot` | Step 1 (`J³ = 0`) |
+| 4 | `Jid_sq_eq_Wid` | Step 1 (`J² = W`) |
+| 5 | `isNoetherianRing_A` | Step 1 (Noetherian) |
+| 6 | `s_component_cancellation` | Step 2 ★ |
+| 7 | `not_isNAbsorbing_A_q` | Step 3, lower |
+| 8 | `fPoly_mul_gPoly` | Step 4 ★ |
+| 9 | `not_isNAbsorbing_polyExt_A_succ_q` | Step 5 |
+| 10 | `isNAbsorbing_A_succ_q` | Step 3, upper |
+| 11 | `isNAbsorbing_polyExt_A_succ_succ_q` | Step 6, upper |
+| 12 | `omegaAbs_A` | Step 3 box (`ω = q+1`) |
+| 13 | `omegaAbs_polyExt_A` | Step 6 box (`ω = q+2`) |
+| 14 | `gap_family` | Claimed Resolution / Conclusion box |
+| 15 | `polyAbsorbingConj_false` | **headline** — Problem 30(c) negative |
+
+`final_theorem`/`mandatory_axioms` are omitted: `USER_NOTES.md` still reads "None — no assumed axioms", so the strict default policy applies and check 4b is skipped.
+
+One judgement call worth flagging: the sketch's Step 6 upper bound is its weakest-supported step (one sentence, no argument), yet it is a boxed claim, so I froze it rather than settling for the inequality that the headline alone needs. That makes Stage F (the transfer isomorphism) mandatory and the hardest engineering in the project; the blueprint says so explicitly and orders the work so that everything else is provable first.
+
+# exit=0 timed_out=False @ 2026-08-09T16:15:29Z

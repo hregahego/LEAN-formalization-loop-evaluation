@@ -1,0 +1,12 @@
+# Axiom allowlist — the assumed certificates permitted by USER_NOTES.md.
+# verify.py permits exactly these names (plus the standard three
+# propext / Classical.choice / Quot.sound) and BANS every other axiom.
+# Both are declared in Erdos477/Defs.lean and both are MANDATORY: harness.json
+# requires Erdos477.Solution.erdos_477 to genuinely depend on each.
+#
+# Paper Theorem 2.2 (Heath-Brown, J. Number Theory 129 (2009), Thm 2),
+# transcribed for a general nonsingular ternary form of degree k ≥ 3.
+Erdos477.heath_brown_diagonal_13
+# Paper Theorem 2.1 (Brownawell–Masser on ℙ¹), transcribed for general r ≥ 3
+# despite the "four_term" name fixed by USER_NOTES.md.
+Erdos477.brownawell_masser_P1_four_term

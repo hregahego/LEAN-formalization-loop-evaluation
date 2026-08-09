@@ -1,0 +1,13 @@
+# iter003-worker1  @ 2026-08-06T19:01:50Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Task 1 (the top REVIEW.md follow-up) is complete and verified:
+
+- `Prob20/Solution.lean` — added `import Prob20.Proofs.Domain.Local` and restated frozen #3, #7, #8, #9, #10, #11, #12, #13 verbatim as `:= Prob20.<name>_proof`.
+- `Prob20/Discharge.lean` — added the eight matching `example : @Prob20.<name> = @Prob20.Solution.<name> := rfl` gates.
+- `lake build Prob20.Solution Prob20.Discharge` → clean (only the 17 expected frozen-`sorry` warnings); all 13 gates typecheck; `#print axioms` on all 13 `Prob20.Solution.*` names is exactly `[propext, Classical.choice, Quot.sound]`. Harness visibility went from 5/17 to 13/17.
+
+Task 2 (Stage G) is conditional on Agents 2 and 3. Neither `theta_not_injective_proof` nor `theta_not_surjective_proof` exists yet, so a background poller is watching for both; I'll assemble #17 in `Prob20/Proofs/Headline/Basic.lean` and extend the re-exports as soon as they land.
+
+# exit=0 timed_out=False @ 2026-08-06T19:05:18Z

@@ -1,0 +1,5 @@
+# SHA-256 pins of the frozen files, recorded by SETUP after Defs.lean and
+# Theorems.lean were frozen. These two files are byte-frozen for the rest of
+# the project; verify.py Check 1 re-hashes them on every run.
+da740e7ee2484e2768d270afbac702170700c5b319111da08b78c065b2359c99  Prob4b/Defs.lean
+41359c003822b8e45a70691153c7b3acd76970258e956e0ed6beffa4c3027b17  Prob4b/Theorems.lean

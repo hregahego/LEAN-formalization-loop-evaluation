@@ -1,0 +1,26 @@
+# init-step-minus1  @ 2026-08-09T16:15:29Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob30c-refactors
+# output_format: text
+
+Both are inside the file's doc comment block — stripped by `verify.py`'s comment-aware scanner, which is why check 2 passes. SETUP is complete.
+
+## Result
+
+**Project name:** `Prob30c` (namespace `Prob30c`), lake package at the repo root, source dir `Prob30c/`, root import `Prob30c.lean`.
+**Pins:** toolchain `leanprover/lean4:v4.32.0`, Mathlib `v4.32.0` = rev `81a5d257c8e410db227a6665ed08f64fea08e997`; `lake exe cache get` served all 8451 oleans from local cache (no source build).
+
+**The 15 frozen theorems** (`Prob30c/Theorems.lean`, all `:= sorry`):
+
+`mem_polyExt_iff`, `isNAbsorbing_succ`, `Jid_pow_three_eq_bot`, `Jid_sq_eq_Wid`, `isNoetherianRing_A`, `s_component_cancellation`, `not_isNAbsorbing_A_q`, `fPoly_mul_gPoly`, `not_isNAbsorbing_polyExt_A_succ_q`, `isNAbsorbing_A_succ_q`, `isNAbsorbing_polyExt_A_succ_succ_q`, `omegaAbs_A`, `omegaAbs_polyExt_A`, `gap_family`, `polyAbsorbingConj_false`.
+
+**Build:** `lake build` → *Build completed successfully (8667 jobs)*, with **only** the 15 expected `declaration uses 'sorry'` warnings from `Theorems.lean` — no errors, no other warnings. `Defs.lean` is `sorry`-free: the three `Jmod` instances BLUEPRINT left as `sorry` (`NonUnitalCommRing`, `IsScalarTower`, `SMulCommClass`) are genuinely proved, so `CommRing (A q)` comes wholly from Mathlib's `Unitization`.
+
+**Axioms:** USER_NOTES.md permits none, so no `axiom` appears anywhere and `scripts/ALLOWED_AXIOMS.txt` is empty (comments only) — the strict default applies.
+
+**Pre-freeze validation** (run in scratch, passed): all six multiplication-table entries including the crucial `e₁e₃ = u₂ + sElt`; `Quo` does not collapse (`mk 1 ≠ 0` and `mk (t^(q-1)) ≠ 0` for `q ≥ 1`); `(1 : A q) ≠ 0`. The counterexample is not vacuous.
+
+**`scripts/verify.py`:** checks 1 (SHA pins), 2 (banned keywords — `sorry` only in `Theorems.lean`, no `axiom`), 3 (clean build), 5 and 5b (Discharge/Solution compile; all 15 statements bind to `Prob30c.Solution.*`) **PASS**. Check 4 fails with `sorryAx` on all 15 — expected at this stage, and it is the single signal that closes when the proofs land.
+
+One deviation from BLUEPRINT's literal Lean text, logged as a `📝` entry: `noncomputable` was added to `polyExt`, `tD`, the `A q` generator aliases, `fPoly` and `gPoly`, since `Polynomial.X`/`C` are noncomputable in Mathlib. No statement changed. No Stage A+ proof was written.
+
+# exit=0 timed_out=False @ 2026-08-09T16:40:15Z

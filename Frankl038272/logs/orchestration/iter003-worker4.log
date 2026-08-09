@@ -1,0 +1,15 @@
+# iter003-worker4  @ 2026-08-09T02:05:05Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/EntropyBound-refactors
+# output_format: text
+
+All five assigned frozen theorems landed. Final report:
+
+**Completed: Stage J item J2 and all of Stage K (#55–#59) — every target on my Agent 4 line, including the stretch goal.**
+
+`indep_coupling_bound` (#55, new `Proofs/IndepCoupling/Bound.lean`) goes through the chain rule (#48) at the product weight `windW G`, then #49 with the *pair of prefixes* as conditioning — made applicable by the genuinely-proved commutation lemma `pref_orVec` — and closes with the exact conditional-entropy evaluation `condHrv_indep_eq`, where the union bit's conditional zero-probability comes out as the **product** `pcond G i x * pcond G i y` (never an inclusion–exclusion variant), via two new law-factorization lemmas plus `FiniteEntropy.split_entropy`/`law_pair_false_eq`/`card_mul_pcondV`.
+
+Stage K needed three new files. `SharedCoupling/Dist.lean` establishes that `kern` is an honest Markov kernel (`pcond ∈ [0,1]` → the Stage C factor bounds → `pmod ∈ [0,1]`), and proves `chain_sum_one` by a coordinate induction whose step is a fixed-point-free involution (`Finset.sum_ninvolution` on `x ↦ Function.update x i (!(x i))`) — that gives #56. `SharedCoupling/Marginal.lean` gives #57 (the endpoint lemma `pmod_eq_of_endpoints` in contrapositive, so the modified chain never leaves `G`'s support) and #58 (the sign average `Fintype.prod_sum` plus the chain rule for the uniform law on `G`). `SharedCoupling/Bound.lean` gives #59: a `tailSum` lemma summing the full chain product over the completions of a prefix, a second involution showing the fresh sign `Uᵢ` is uniform and independent of the conditioning, and hence the crux `law_wsh_false_eq` — the conditional zero-probability is exactly `qker Sᵢ Tᵢ` by `q_sign_average` (#21). `rank_one_product_bound` (#27) applies pointwise inside the sum, and a self-contained variance argument (`0 ≤ ∑ π (M − 𝔼M)²`) supplies `𝔼[W²] ≥ (𝔼W)²`, with #58 identifying the result as the frozen `Egfun G i`. One deliberate deviation from the blueprint sketch, flagged in PROGRESS: I condition on the two prefixes only rather than on `(prefixes, U_{<i})`; that σ-field is coarser, so by #49 the resulting bound is if anything stronger, and the sign average is unaffected since the prefixes depend only on `U_{<i}`.
+
+Whole-project `lake build` is green (8602 jobs, 0 errors, exactly the 61 `declaration uses 'sorry'` warnings from `Theorems.lean` and no others); `#print axioms` on all five `EntropyBound.Solution.*` names prints exactly `[propext, Classical.choice, Quot.sound]`; `scripts/verify.py` Checks 1–3 PASS and Checks 4/5 PASS for all five of my names (remaining FAILs belong to the still-`sorry` Stages E/F/G-middle/H/L). No new axiom, no banned tactic, no `MeasureTheory`/`PMF` import, and the `Defs.lean`/`Theorems.lean` SHA pins are unchanged.
+
+# exit=0 timed_out=False @ 2026-08-09T02:39:58Z

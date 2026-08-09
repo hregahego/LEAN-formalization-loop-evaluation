@@ -1,0 +1,21 @@
+name = "Prob4b"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Prob4b"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+maxHeartbeats = 1000000
+synthInstance.maxHeartbeats = 1000000
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+# pinned to the Mathlib commit that ships leanprover/lean4:v4.31.0
+rev = "fabf563a7c95a166b8d7b6efca11c8b4dc9d911f"
+
+[[lean_lib]]
+name = "Prob4b"

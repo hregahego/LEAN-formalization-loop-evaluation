@@ -1,0 +1,29 @@
+# setup-architect  @ 2026-08-09T13:29:10Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob27b-refactors
+# output_format: text
+
+Scaffolding complete.
+
+**(a) Project source-dir / root namespace:** `Prob27b`
+
+**(b) Frozen theorem names** (stage order, byte-identical in `BLUEPRINT.md` §3 and `scripts/harness.json`):
+
+| Stage | Names |
+| --- | --- |
+| A | `R_card_eq`, `R_not_commutative` |
+| B | `F_isNullPoly` |
+| C | `Fe_eval_ne_zero`, `nullPoly_not_rightIdeal` |
+| D | `D_hasFiniteResidueRings`, `A_isFreeOfRankEight`, `A_torsionFree`, `iota_injective`, `B_fraction_algebra`, `redPi_surjective`, `redPi_eq_zero_iff` |
+| E | `Ftilde_eval_mem_pi`, `P_integerValued`, `constE_integerValued` |
+| F | `Pe_not_integerValued`, `prob27b_counterexample` (headline) |
+
+Key decisions recorded in the blueprint:
+
+- **One parametrised algebra `RAlg k`** (structure over `Fin 8 → k`, explicit structure-constant table) instantiated three times: `R = RAlg (ZMod 2)`, `A = RAlg D`, `B = RAlg K`. This makes `A = D ⊗_{𝔽₂} R = R[π]` concrete (no `TensorProduct`), gives `A → R` reduction mod `π` as a plain coefficientwise ring hom (no noncommutative `Ideal.Quotient`), and keeps `R` a computable 256-element `Fintype` so Step 2's `∀ r ∈ R, F(r)=0` is a kernel `decide` (with a structural `(α,β)`-case-split fallback documented). I derived and hand-checked the multiplication table (including `mul_assoc` componentwise) and re-verified the sketch's Step 2 identity in all four `(α,β)` cases and the Step 3/5 computation `(F·e)(u+v) = s`.
+- **Polynomials built from `Polynomial.monomial`**, since `eval_mul`/`eval_C_mul`/`aeval` all require commutative coefficients — the noncommutativity is exactly what the counterexample lives on, so the cheat-watch boxes name `(p * C c).eval x = p.eval x * c` as the fatal false shortcut.
+- **Headline is a conjunction**, carrying `D`-has-finite-residue-rings plus `A` finite-free and torsion-free alongside the existential, so the result actually refutes the *conditional* Problem 27(b) rather than just exhibiting a non-ring.
+- `USER_NOTES.md` says "None — no assumed axioms", so `harness.json` omits `final_theorem`/`mandatory_axioms` and the blueprint states no `axiom` declaration may appear anywhere.
+
+Not written (per pipeline policy): `PROGRESS.md`, `TASKS.md`, `REVIEW.md`, `scripts/verify.py`. `USER_NOTES.md` untouched.
+
+# exit=0 timed_out=False @ 2026-08-09T13:47:04Z

@@ -1,0 +1,48 @@
+# init-step-minus1  @ 2026-08-09T00:15:34Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/EntropyBound-refactors
+# output_format: text
+
+SETUP is complete.
+
+## Project
+
+**`EntropyBound`** — Lean 4 + Mathlib at the repo root, exactly the BLUEPRINT Part −1 layout:
+
+```
+EntropyBound/Defs.lean          FROZEN — 30 definitions (D1–D30), 0 axioms, 0 sorry
+EntropyBound/Theorems.lean      FROZEN — 61 statements, each := sorry
+EntropyBound/Proofs/<Stage>/Basic.lean   × 12 (Constants … Assembly)
+EntropyBound/Discharge.lean     stub
+EntropyBound/Solution.lean      stub
+EntropyBound.lean               imports everything
+```
+
+Pins (recorded in PROGRESS.md, not to be bumped): `lean-toolchain = leanprover/lean4:v4.31.0`; Mathlib `v4.31.0` = rev `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
+
+## Frozen theorem names (61, in `harness.json` order)
+
+`strict_margin, log_ten_lower, log_ten_upper, log_two_upper, C_lt_ratio_123_65` · `binEntropy_parabola_lower, binEntropy_two_sided, fser_closed_form, enat_series_form, enat_sum_of_squares, Qser_closed_form, Qser_lower_bounds, Qser_hasDerivAt, Qder_upper_bounds, Aser_closed_form, Aser_hasDerivAt, Ppoly_pos, Npoly_eq_deriv_form, gprofile_sq_eq, gprofile_hasDerivAt` · `q_sign_average, q_mem_Icc, diag_normalization, Rpoly_power_basis, Rpoly_determinant_identity, Rpoly_lower_bound, rank_one_product_bound` · `Gpoly_bernstein_left, Gpoly_bernstein_right, Gpoly_pos, gprofile_speed_le, gprofile_lipschitz` · `Ader_lower_small, Ader_lower_large, Ader_lower_middle, Ader_lower_bound, Aser_lipschitz_lower, entropy_speed_bound` · `off_diagonal_estimate` · `diagonal_at_one, diagonal_small, diagonal_large, diagonal_middle, diagonal_estimate` · `Phi_decomposition, pointwise_inequality, scalar_inequality` · `entropy_chain_rule, condHrv_le_of_comp, entropy_le_log_card, uniform_entropy_eq_log_card, prefix_entropy_decomposition, freq_eq_one_sub_ES` · `indep_support_mem, indep_coupling_bound` · `shared_isDist, shared_support_mem, shared_marginal_uniform, shared_coupling_bound` · `frankl_cube, frankl_038272`
+
+Name set and order match `scripts/harness.json` exactly.
+
+## Build
+
+`lake build` → **Build completed successfully (8575 jobs)**, 0 errors, 61 warnings — all of them `declaration uses 'sorry'` from `Theorems.lean`, one per frozen theorem. No other warnings.
+
+## Axioms
+
+`USER_NOTES.md` says "None — no assumed axioms", so `scripts/ALLOWED_AXIOMS.txt` is a comment-only (empty) allowlist and `Defs.lean` declares **zero** `axiom`s. `Ader_lower_middle` and `diagonal_middle` must be genuinely proved.
+
+## verify.py (run once, as instructed)
+
+- Check 1 SHA pins — **PASS** (both frozen files pinned in `scripts/frozen.sha256`)
+- Check 2 banned keywords — **PASS** (`sorry` only in `Theorems.lean`, no non-allowlisted `axiom`)
+- Check 3 clean build — **PASS**
+- Check 4 `#print axioms` — FAIL, expected: no `EntropyBound.Solution.*` exists yet
+- Check 5 statement gates — `Discharge` and `Solution` compile; the generated gates fail for the same reason
+
+Before freezing I validated the transcribed data outside Lean with exact `Fraction` arithmetic: identities #18, #19, #24, #25, #28, #29 hold exactly at 21 rational points per variable; `min cR = 31387/40000`, `min (bGl ∪ bGr) = 2530002779/840000000`. Numerics also reproduce the sketch's diagnostics (`min Dfun ≈ 6.09·10⁻⁵` at `s ≈ 0.6856`; `min A' ≈ 8/9 + 0.032` near `z ≈ 0.485`), and the series index shifts check out (`fser 1 = 1`, `Qser 0 = 1`, `Qser 1 = 2 log 2`, `Aser 1 = 1`).
+
+One thing to flag: `scripts/control_manifest.sha256` pinned `frozen.sha256` at its placeholder value and `ALLOWED_AXIOMS.txt` as `ABSENT`. Since those two files are the ones this stage is required to write, I refreshed exactly those two lines and left the `verify.py` / `harness.json` pins untouched; this is logged in the `📝` PROGRESS entry. No proof of any frozen theorem was written.
+
+# exit=0 timed_out=False @ 2026-08-09T00:43:17Z

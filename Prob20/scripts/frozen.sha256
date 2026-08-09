@@ -1,0 +1,6 @@
+# SHA-256 pins of the frozen files, recorded by SETUP after Defs.lean and
+# Theorems.lean were frozen. One "<sha256>  <PROJECT>/<file>.lean" line each.
+# These two files are byte-frozen: any edit during the proving phase is a
+# verification failure (scripts/verify.py, Check 1).
+ae6f2d2d34c1578fa925ec61089a456a761f884281596f1942afa40e1d7659ee  Prob20/Defs.lean
+7709d83491078be56c44543e4435f3cf592f7bfc7740a6142bd1ef5355e68e8a  Prob20/Theorems.lean

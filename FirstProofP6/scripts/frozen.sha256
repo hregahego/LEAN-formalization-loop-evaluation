@@ -1,0 +1,6 @@
+# SHA-256 pins of the frozen files, recorded by init.py after Defs.lean and
+# Theorems.lean are frozen. One "<sha256>  <PROJECT>/<file>.lean" line each, e.g.:
+#   <sha256>  <Project>/Defs.lean
+#   <sha256>  <Project>/Theorems.lean
+03692cea767f05297141c7a22637c6a181d703fa79a1410784daea7f29506dcf  TreeIrred/Defs.lean
+9700d6870bb79462ad458b672915be84e7093984d19859485b314c6d5a463e4c  TreeIrred/Theorems.lean

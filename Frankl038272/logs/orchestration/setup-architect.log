@@ -1,0 +1,32 @@
+# setup-architect  @ 2026-08-08T23:35:53Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/EntropyBound-refactors
+# output_format: text
+
+Scaffolding complete. I wrote exactly two files: `BLUEPRINT.md` and `scripts/harness.json` (no `PROGRESS.md`/`TASKS.md`/`REVIEW.md`/`verify.py`).
+
+**(a) Project source-dir / root namespace:** `EntropyBound`
+
+**(b) Frozen theorem names** (61, in the order the BLUEPRINT stages prove them):
+
+| Stage (`Proofs/…`) | Sketch step | Frozen names |
+|---|---|---|
+| `Constants/` | 1 | `strict_margin`, `log_ten_lower`, `log_ten_upper`, `log_two_upper`, `C_lt_ratio_123_65` |
+| `Toolbox/` | 2 | `binEntropy_parabola_lower`, `binEntropy_two_sided`, `fser_closed_form`, `enat_series_form`, `enat_sum_of_squares`, `Qser_closed_form`, `Qser_lower_bounds`, `Qser_hasDerivAt`, `Qder_upper_bounds`, `Aser_closed_form`, `Aser_hasDerivAt`, `Ppoly_pos`, `Npoly_eq_deriv_form`, `gprofile_sq_eq`, `gprofile_hasDerivAt` |
+| `RankOne/` | 3 | `q_sign_average`, `q_mem_Icc`, `diag_normalization`, `Rpoly_power_basis`, `Rpoly_determinant_identity`, `Rpoly_lower_bound`, `rank_one_product_bound` |
+| `ProfileSpeed/` | 4 | `Gpoly_bernstein_left`, `Gpoly_bernstein_right`, `Gpoly_pos`, `gprofile_speed_le`, `gprofile_lipschitz` |
+| `EntropySpeed/` | 5 | `Ader_lower_small`, `Ader_lower_large`, `Ader_lower_middle`, `Ader_lower_bound`, `Aser_lipschitz_lower`, `entropy_speed_bound` |
+| `OffDiagonal/` | 6 | `off_diagonal_estimate` |
+| `Diagonal/` | 7 | `diagonal_at_one`, `diagonal_small`, `diagonal_large`, `diagonal_middle`, `diagonal_estimate` |
+| `Scalar/` | 8 | `Phi_decomposition`, `pointwise_inequality`, **`scalar_inequality`** (milestone) |
+| `FiniteEntropy/` | 9 | `entropy_chain_rule`, `condHrv_le_of_comp`, `entropy_le_log_card`, `uniform_entropy_eq_log_card`, `prefix_entropy_decomposition`, `freq_eq_one_sub_ES` |
+| `IndepCoupling/` | 10 | `indep_support_mem`, `indep_coupling_bound` |
+| `SharedCoupling/` | 11 | `shared_isDist`, `shared_support_mem`, `shared_marginal_uniform`, `shared_coupling_bound` |
+| `Assembly/` | 12 | `frankl_cube`, **`frankl_038272`** (headline) |
+
+Notes on the decisions that shape the rest of the run:
+
+- `USER_NOTES.md` still reads "None — no assumed axioms", so `harness.json` omits `final_theorem`/`mandatory_axioms` (check 4b skipped), `ALLOWED_AXIOMS.txt` is empty, and the two interval-arithmetic obligations `Ader_lower_middle` and `diagonal_middle` are recorded as genuine proof obligations, not certificates.
+- Key modeling decisions recorded in Part −1 §2: natural-log entropy everywhere (`Hnat` defined from `Real.log`, with a bridge lemma to `Real.binEntropy`); `Qser`/`fser`/`Aser` defined by their `tsum`s with closed forms as theorems; `Rpoly` defined by its Bernstein expansion (positivity free, power-basis table frozen as the cross-check); a fully finitary probability layer (`entropyW`/`law`/`Hrv`/`condHrv` over `Fintype` weight vectors, no `MeasureTheory`); and the shared-sign coupling given by the explicit product formula so conditional i.i.d. is manifest.
+- One range adjustment sanctioned by the sketch itself is flagged explicitly: `Ader_lower_small` covers `(0, 1/10]` (stronger than 5a) and `Ader_lower_middle` covers `[1/10, 99999/100000]` (a subinterval of 5c) — the three ranges still cover `(0,1)`, and `Ader_lower_bound` is the unweakened interface.
+
+# exit=0 timed_out=False @ 2026-08-08T23:49:48Z

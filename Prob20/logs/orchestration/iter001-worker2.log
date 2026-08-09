@@ -1,0 +1,15 @@
+# iter001-worker2  @ 2026-08-06T16:07:11Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Stage B (B1, B2, B3) is complete and compiles cleanly.
+
+**What I did** — working only in `Prob20/Proofs/Theta/Basic.lean`:
+
+- **B1**: proved `int_mem_range_iff : x ∈ (algebraMap ↥Dom K).range ↔ x ∈ Dom` (with `int_algebraMap_dom_apply` as a `rfl` bridge), and on top of it the two element-form rephrasings exactly as specified — `mem_IntD_iff : ∀ f : Polynomial K, f ∈ IntD ↔ ∀ x : K, x ∈ Dom → f.eval x ∈ Dom` and `mem_IntDn_iff : ∀ (n : ℕ) (G : MvPolynomial (Fin n) K), G ∈ IntDn n ↔ ∀ w : Fin n → K, (∀ i, w i ∈ Dom) → MvPolynomial.eval w G ∈ Dom` (the `∀ v : Fin n → ↥Dom` of `IntMv` is instantiated at the *generic* tuple `fun i => ⟨w i, hw i⟩`, never specialized). Plus the closure lemmas `C_mem_IntD`, `X_mem_IntD`, `eval_zero_mem_Dom`.
+- **B2**: nothing to prove — with `Defs.lean`'s `thetaMul = (MultilinearMap.mkPiAlgebra …).compLinearMap …`, multilinearity is definitional; recorded as a comment rather than a hand-written `map_update_add'`.
+- **B3**: **no SETUP bug** — frozen #5 went through exactly as BLUEPRINT predicted, via the suggested `simp [theta, thetaMul, PiTensorProduct.lift.tprod, MultilinearMap.compLinearMap_apply, MultilinearMap.mkPiAlgebra_apply]`. I proved the generic `theta_apply_tprod_generic` for arbitrary `(R, Kr)` and derived `theta_apply_tprod_proof` with the statement copied verbatim from `Prob20/Theorems.lean:36-39`. All three Stage-B cheat-watch guardrail `example`s compile, including the 2-fold pure tensor of constants landing on `MvPolynomial.C c * MvPolynomial.C d`, confirming the product-of-`fᵢ(Xᵢ)` shape.
+
+**Checks**: `lake build Prob20.Proofs.Theta.Basic` → success, zero errors and zero warnings; `#print axioms` on all nine declarations → `[propext, Classical.choice, Quot.sound]` only; `example : @Prob20.theta_apply_tprod = @Prob20.theta_apply_tprod_proof := rfl` compiles, so the proof has exactly the frozen type; every line ≤ 100 chars; no `sorry`/`native_decide`/`axiom`. I touched no other file, and did not define `theta_mem_intMv` or `eval_aeval` (Agent 3's). PROGRESS.md has the `🔧` claim and the final `✅` entry appended via `cat >>`.
+
+# exit=0 timed_out=False @ 2026-08-06T16:10:52Z

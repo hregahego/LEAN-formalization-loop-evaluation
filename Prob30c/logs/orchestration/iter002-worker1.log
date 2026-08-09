@@ -1,0 +1,15 @@
+# iter002-worker1  @ 2026-08-09T17:19:32Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob30c-refactors
+# output_format: text
+
+Both steps of my Iteration-2 assignment are complete and verified.
+
+**STEP 1 (REVIEW follow-up #1 — Solution wiring for Stage B).** In `Prob30c/Solution.lean` I changed exactly three right-hand sides and nothing else: `Jid_pow_three_eq_bot q` → `Jid_pow_three_eq_bot_proof q`, `Jid_sq_eq_Wid q` → `Jid_sq_eq_Wid_proof q`, `isNoetherianRing_A q` → `isNoetherianRing_A_proof q`. `lake build` is clean (8667 jobs, only the 15 expected `Theorems.lean` sorry warnings) and all three `Prob30c.Solution.*` now `#print axioms` to `[propext, Classical.choice, Quot.sound]`, taking verify.py check 4 from 2/15 to 5/15.
+
+**STEP 2 (Stage C item C3).** Appended to `Prob30c/Proofs/Cancellation/Basic.lean` (adding only `import Prob30c.Proofs.Model.Basic`; the four Iteration-1 declarations keep their exact names, statements, and non-`simp`/non-`instance` status). Four generic support lemmas — `algebraMap_mul_sElt_mul`, `mem_span_algebraMap_mul_sElt_iff`, and its two instances `mem_span_sElt_iff` and `mem_span_t_sElt_iff` — establish that both `Ideal.span {s}` and `Ideal.span {t·s}` collapse to the `B`-line `B ∙ w`, because `J` annihilates `s`. Then `s_component_cancellation_proof` states the frozen proposition verbatim for arbitrary `x, y ∈ J` with the full-strength conclusion: `Alg.mem_Jid_iff` zeroes both `fst`s, `mem_span_sElt_iff` makes `γ₁(x·y) = γ₂(x·y) = 0`, which via `Alg.γ₁_mul`/`Alg.γ₂_mul` are literally the two hypotheses of the Iteration-1 `dvd_s_of_u_vanish` at `aᵢ = Alg.αᵢ x`, `bᵢ = Alg.αᵢ y`; the resulting `tD ∣ (α₁x·α₃y + α₃x·α₁y)` is matched against `Alg.σ_mul` and pushed through `Alg.algebraMap_mul_sElt_eq_zero_iff` to land in `Ideal.span {tElt q * sElt q}`.
+
+**Non-vacuity checks** (scratch only, then deleted, all passed): `sElt 3 ∉ Ideal.span {tElt 3 * sElt 3}` — so the conclusion is strictly stronger than the hypothesis and C3 is not trivial; `tElt 3 * sElt 3 ≠ 0`; and the hypothesis is satisfiable by a real product of `J`-elements (`e₁e₃ + e₂e₂ = sElt`).
+
+**STEP 3.** Wired `s_component_cancellation` in `Solution.lean`; full `lake build` clean, `Discharge.lean` gates still compile, `frozen.sha256` still matches `Defs.lean`/`Theorems.lean` byte for byte, and check 4 is now 6/15. Every new declaration `#print axioms` to `[propext, Classical.choice, Quot.sound]` — no `sorry`, no new `axiom`, no banned tactic. One housekeeping note logged in PROGRESS: an untracked `Scratch.lean` (importing `Proofs/Transfer`, not mine) is sitting at the repo root and must be deleted before verify.py check 2 runs.
+
+# exit=0 timed_out=False @ 2026-08-09T17:29:31Z

@@ -1,0 +1,28 @@
+# init-step-minus1  @ 2026-08-06T14:24:07Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Setup (BLUEPRINT Part −1) is complete.
+
+**Project name:** `Prob20` (package root = repo root; source dir `Prob20/`, root import `Prob20.lean`)
+- Toolchain pinned: `leanprover/lean4:v4.31.0`; Mathlib pinned `rev = "v4.31.0"` → commit `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`; `lake exe cache get` used.
+
+**Frozen files** (SHA-256 pinned in `scripts/frozen.sha256`):
+- `Prob20/Defs.lean` — D1–D9 (`S`, `T`, `piA`/`piK`/`maxPow`/`maxSet`, `Dom`/`maxD`, generic `IntPoly`/`IntMv` + `IntD`/`IntDn`, `thetaMul`/`theta`, `p`/`q`/`g`/`bigP`, `maxSmulInt`), **no `sorry`**, **no `axiom`**.
+- `Prob20/Theorems.lean` — the 17 frozen statements, each `:= sorry`.
+
+**Frozen theorem names:** `D_isDomain`, `mem_Dom_iff_mem_max_or_sub_one_mem_max`, `D_isLocalRing`, `D_isFractionRing`, `theta_apply_tprod`, `theta_mem_intMv`, `p_eval_mem_max`, `smul_p_mem_int`, `g_mem_int`, `bigP_mem_intMv`, `p_not_mem_max_int`, `t_mul_p_not_mem_max_int`, `t_add_one_mul_p_not_mem_max_int`, `theta_not_injective`, `bigP_not_mem_range`, `theta_not_surjective`, `theta_not_injective_not_surjective` — matching `scripts/harness.json` exactly.
+
+**Also created:** `Prob20/Proofs/{Domain,Theta,KeyPolys,Vanishing,Injectivity,Surjectivity,Headline}/Basic.lean` placeholders, `Prob20/Discharge.lean` and `Prob20/Solution.lean` stubs, root `Prob20.lean` importing everything.
+
+**Axioms:** `USER_NOTES.md` says "None — no assumed axioms", so `scripts/ALLOWED_AXIOMS.txt` is an empty (comment-only) allowlist and no `axiom` was declared anywhere.
+
+**Build:** `lake build` — "Build completed successfully (8570 jobs)", with exactly **17** `declaration uses 'sorry'` warnings, all from `Prob20/Theorems.lean`, and **zero** errors or other warnings.
+
+**`scripts/verify.py`:** Check 1 (SHA pins) **PASS**, Check 2 (banned keywords; `sorry` only in `Theorems.lean`) **PASS**, Check 3 (clean build) **PASS**. Checks 4 (`#print axioms`) and 5b (statement gates) fail because `Prob20.Solution.*` does not exist yet — expected with all proofs still `sorry`; Check 5's module compilation of `Prob20.Discharge` and `Prob20.Solution` passes.
+
+Two things worth flagging for later agents (both logged in `PROGRESS.md`):
+- `Dom_le_T : Dom ≤ T` is proved inside the frozen `Defs.lean` — it was needed to construct `maxD`'s `smul_mem'`. Stage A must reuse it, not redefine it.
+- Before freezing I validated the model in a scratch file (not committed): `piK ∈ maxSet`, `tK ∈ T`, `piK * tK ∈ Dom`, and the two negative guardrails `(1 : K) ∉ maxSet` and `tK ∉ Dom` — so `𝔪` is proper and `D` did not collapse to `T`. `lakefile.toml` keeps the Mathlib linter set but disables `linter.style.header` (its copyright convention would otherwise emit warnings that fail Check 3).
+
+# exit=0 timed_out=False @ 2026-08-06T15:19:13Z

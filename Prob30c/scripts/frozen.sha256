@@ -1,0 +1,5 @@
+# SHA-256 pins of the frozen files, recorded by the SETUP agent after Defs.lean
+# and Theorems.lean were frozen. Format: "<sha256>  <PROJECT>/<file>.lean".
+# scripts/verify.py check 1 fails if either file is edited, or is missing here.
+5c89fa45fe7110351d9c9a421d2b4fc3415aeafcee5ee90632a002f7ca73563b  Prob30c/Defs.lean
+330323cfe795980b553b3e6f84968de04ae1321374e070eb9fefa001d1ea3b63  Prob30c/Theorems.lean

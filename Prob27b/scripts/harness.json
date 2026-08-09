@@ -1,0 +1,23 @@
+{
+  "project": "Prob27b",
+  "problem": "Problem 27(b): Int(A) need not be a ring even when D has finite residue rings (D = F2[pi], A = D tensor a truncated path algebra)",
+  "theorems": [
+    "R_card_eq",
+    "R_not_commutative",
+    "F_isNullPoly",
+    "Fe_eval_ne_zero",
+    "nullPoly_not_rightIdeal",
+    "D_hasFiniteResidueRings",
+    "A_isFreeOfRankEight",
+    "A_torsionFree",
+    "iota_injective",
+    "B_fraction_algebra",
+    "redPi_surjective",
+    "redPi_eq_zero_iff",
+    "Ftilde_eval_mem_pi",
+    "P_integerValued",
+    "constE_integerValued",
+    "Pe_not_integerValued",
+    "prob27b_counterexample"
+  ]
+}

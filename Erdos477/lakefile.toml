@@ -1,0 +1,22 @@
+name = "Erdos477"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Erdos477"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+# Mathlib's *contribution style* linter set (copyright headers, line length,
+# `open scoped Classical`, ...) is deliberately OFF: `scripts/verify.py` check 3
+# fails the build on ANY warning, so cosmetic style complaints would be
+# indistinguishable from real problems. Every soundness-relevant Lean linter
+# (`sorry`, unused variables, deprecations, ...) is a core default and stays on.
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.31.0"
+
+[[lean_lib]]
+name = "Erdos477"

@@ -1,0 +1,28 @@
+# setup-architect  @ 2026-08-08T23:36:05Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Erdos477-refactors
+# output_format: text
+
+Scaffolding is written: `BLUEPRINT.md` and `scripts/harness.json`. (Per instructions I did not write `PROGRESS.md`, `TASKS.md`, `REVIEW.md`, or `scripts/verify.py` — `setup.py` renders those.)
+
+**(a) Project source-dir / root namespace:** `Erdos477`
+
+**(b) Frozen theorem names** (in stage order, as listed in `harness.json`):
+
+| Stage | Frozen names |
+|---|---|
+| A — Elementary (`Proofs/Elementary/`) | `zero_mem_Bset`, `Dset_neg_mem`, `pow13_inj`, `mem_Bset_of_rat_pow13`, `sub_pow13_mem_Dset_iff` |
+| B — Cofactor (`Proofs/Cofactor/`) | `Qcof_ge_half_max_pow12`, `abs_pow13_sub_pow13_ge` |
+| C — FunctionField / Route A (`Proofs/FunctionField/`) | `bm_forms_height_bound`, `no_nonconstant_param_of_not_pow13`, `no_rational_param_of_not_mem_Bset`, `no_linear_param` |
+| D — HeathBrown (`Proofs/HeathBrown/`) | `hb_diagonal_count` |
+| E — BadShift (`Proofs/BadShift/`) | `badShift_bound` |
+| F — Greedy (`Proofs/Greedy/`) | `greedy_tiling` |
+| G — Assembly (`Proofs/Assembly/`) | `good_shift_exists`, **`erdos_477`** (headline) |
+
+Key decisions driven by `USER_NOTES.md`, which overrides `SKETCH.md` in two places:
+
+- **Both axioms are mandatory and stated in full generality.** `heath_brown_diagonal_13` is the *general* Theorem 2.2 (arbitrary nonsingular ternary form of degree `k ≥ 3`, real `LiesOnPolyParam` incidence predicate, `|N| ≪_F X` as an explicit constant `A` bound *before* `∃ C`), and `brownawell_masser_P1_four_term` is the *general* `r ≥ 3` Theorem 2.1 (`S`-units in `k(t)ˣ`, `ordP` on `P1Point k := Option k`, `projHeight` as a `∑ᶠ` over all of ℙ¹). The sketch's "AXIOM HB" therefore becomes the frozen **theorem** `hb_diagonal_count`, and the BM4 forms reformulation becomes the frozen **theorem** `bm_forms_height_bound`.
+- **Route A only.** `no_linear_param` is reached via Lemma 3.1 → Corollary 3.2, so `erdos_477` genuinely depends on both axioms; `harness.json` sets `final_theorem` + `mandatory_axioms` to make check 4b enforce that, and Stage C's cheat-watch box explicitly forbids the Route B Vandermonde proof on the dependency path (and forbids `Polynomial.abc` there too).
+
+Stage C is by far the hardest and is flagged as such; Stage F (`greedy_tiling`) is marked as the independent prove-first de-risker, and Stage D is noted as parallelizable with C since `hb_diagonal_count` takes `hexcl` as a hypothesis.
+
+# exit=0 timed_out=False @ 2026-08-08T23:49:38Z

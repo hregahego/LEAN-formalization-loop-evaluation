@@ -1,0 +1,17 @@
+# iter001-worker4  @ 2026-08-09T00:37:35Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Erdos477-refactors
+# output_format: text
+
+Done — Stage C step C0 is complete and clean.
+
+**What I built** (all in `Erdos477/Proofs/FunctionField/Basic.lean`, the only file I touched, over general `{k : Type*} [Field k]`):
+
+The whole `ord_P` calculus of BLUEPRINT C0. The two workhorses are `ordP_some_eq_of_eq_div` / `ordP_none_eq_of_eq_div`, which compute `ord_P` from *any* representation `f = p/q` (via `RatFunc.num_mul_eq_mul_denom_iff` + `Polynomial.rootMultiplicity_mul`, resp. `RatFunc.intDegree_div`); everything multiplicative follows — `ordP_one`, `ordP_C`, `ordP_mul`, `ordP_pow`, `ordP_eq_zero_of_const`. Then `suppFinset` exactly as specified, with `ordP_ne_zero_mem_suppFinset`, `card_suppFinset_le` and `ordP_ne_zero_finite`; `minOrd_eq_zero_of_notMem` (handling the `dif`-guarded `r = 0` junk branch) and `projHeight_eq_sum_over_S`; and the one content-bearing lemma, the degree formula `sum_ordP_eq_zero [IsAlgClosed k] : f ≠ 0 → ∑ᶠ P, ordP P f = 0`, from an auxiliary `sum_rootMultiplicity_eq_natDegree` (`count_roots` + `toFinset_sum_count_eq` + `(IsAlgClosed.splits p).natDegree_eq_card_roots`). `IsAlgClosed` is assumed only on those last two; `CharZero` is nowhere needed.
+
+I also finished **both stretch goals**: `IsProjZero_prod`, and `projZeroCount_le_of_isHomogeneous : Φ ≠ 0 → Φ.IsHomogeneous e → projZeroCount Φ ≤ e`, built on a new dehomogenization `dehom Φ := aeval ![X, 1] Φ` with a support-level analysis (`add_eq_of_mem_support`, `coeff_dehom_of_mem_support`, `dehom_ne_zero`, `coeff_dehom_top_eq_zero` — the point at infinity is paid for by a lost degree). All **five** chart guardrails from the Stage C cheat-watch box compile as `example`s, including `projZeroCount (X 0 * X 1 : MvPolynomial (Fin 2) ℂ) = 2`.
+
+**Checks:** `lake build` completes with 0 errors and exactly the 16 expected `Theorems.lean … uses 'sorry'` warnings, nothing else; `scripts/verify.py` checks 1–3 PASS (4/5 still fail only because `Erdos477.Solution.*` wiring is deferred by design); `#print axioms` on every declaration gives `[propext, Classical.choice, Quot.sound]`. No new axiom, no Route B, no `Polynomial.abc`, no frozen file edited.
+
+**One thing to flag:** I dropped the `a ≠ 0` / `f ≠ 0` hypotheses from `ordP_C` and `ordP_eq_zero_of_const` — they are unconditional (`RatFunc.C 0 = 0`, `ordP P 0 = 0`), and keeping an unused binder would have emitted an `unused variable` warning, which fails verify.py check 3. That is a strengthening, never a weakening, but callers must write `ordP_C P a`, not `ordP_C P ha`. Recorded in PROGRESS.md as a `📝` note inside the ✅ entry, along with a concrete plan for C1 built on this API.
+
+# exit=0 timed_out=False @ 2026-08-09T00:53:18Z

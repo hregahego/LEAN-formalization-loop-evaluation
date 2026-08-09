@@ -1,0 +1,4 @@
+# SHA-256 pins of the frozen files, recorded by init.py after Defs.lean and
+# Theorems.lean are frozen. One "<sha256>  <PROJECT>/<file>.lean" line each.
+9f5ccea2f379c6a8cbc976d74bea80b2b92ced56be7c5db068750351b4a3018d  Erdos477/Defs.lean
+4b7a513ae0bc7eb367479570553ba8531bb41b86363b56b67f4ecd293bddafd1  Erdos477/Theorems.lean

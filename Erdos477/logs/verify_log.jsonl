@@ -1,0 +1,13 @@
+{"timestamp": "2026-08-09T00:27:34Z", "target": "--all", "issues": 2, "duration_sec": 59, "success": false}
+{"timestamp": "2026-08-09T00:51:38Z", "target": "--all", "issues": 2, "duration_sec": 33, "success": false}
+{"timestamp": "2026-08-09T00:52:15Z", "target": "--all", "issues": 2, "duration_sec": 34, "success": false}
+{"timestamp": "2026-08-09T00:53:51Z", "target": "--all", "issues": 2, "duration_sec": 32, "success": false}
+{"timestamp": "2026-08-09T01:16:00Z", "target": "--all", "issues": 2, "duration_sec": 35, "success": false}
+{"timestamp": "2026-08-09T01:33:37Z", "target": "--all", "issues": 2, "duration_sec": 45, "success": false}
+{"timestamp": "2026-08-09T01:46:24Z", "target": "--all", "issues": 2, "duration_sec": 38, "success": false}
+{"timestamp": "2026-08-09T01:47:09Z", "target": "--all", "issues": 2, "duration_sec": 41, "success": false}
+{"timestamp": "2026-08-09T01:48:33Z", "target": "--all", "issues": 2, "duration_sec": 40, "success": false}
+{"timestamp": "2026-08-09T01:53:19Z", "target": "--all", "issues": 2, "duration_sec": 47, "success": false}
+{"timestamp": "2026-08-09T02:12:00Z", "target": "--all", "issues": 0, "duration_sec": 40, "success": true}
+{"timestamp": "2026-08-09T02:14:03Z", "target": "--all", "issues": 0, "duration_sec": 43, "success": true}
+{"timestamp": "2026-08-09T02:24:28Z", "target": "--all", "issues": 0, "duration_sec": 47, "success": true}

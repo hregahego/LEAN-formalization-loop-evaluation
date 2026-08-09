@@ -1,0 +1,11 @@
+# iter001-worker3  @ 2026-08-06T16:07:11Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/Prob20-refactors
+# output_format: text
+
+Done — Stage B4 is proved and the whole project still builds.
+
+**What I did.** I created `Prob20/Proofs/Theta/MemIntMv.lean` (importing `Prob20.Defs` only) and added exactly one line, `import Prob20.Proofs.Theta.MemIntMv`, to `Prob20.lean` right after `import Prob20.Proofs.Theta.Basic`, touching nothing else. The file proves, in `namespace Prob20`: `mv_eval_aeval_X` (evaluating `f(Xᵢ)` at `w` equals `f.eval (w i)`, by `Polynomial.induction_on` with `simp` in each case); `mv_theta_tprod`, the pure-tensor formula `theta ↥Dom K n (tprod f) = ∏ i, aeval (X i) (f i)`, re-derived inline by `simp [theta, thetaMul, PiTensorProduct.lift.tprod]` (it went through first try, so `thetaMul`'s `mkPiAlgebra.compLinearMap` shape in the frozen `Defs.lean` is sound) and deliberately independent of Agent 2's `theta_apply_tprod_proof`; `mv_prod_aeval_mem_IntDn`, that such a product lies in `IntDn n` for **all** `v : Fin n → ↥Dom` (via `map_prod`, `prod_mem`, `mv_eval_aeval_X`, and each `f i ∈ IntD`); and finally frozen #6 as `theta_mem_intMv_proof`, statement copied verbatim from `Prob20/Theorems.lean:42-43`, proved for **all** `x` in the tensor power by `PiTensorProduct.induction_on` — the `smul_tprod` case via `map_smul` + `Subalgebra.smul_mem`, the `add` case via `map_add` + `add_mem`. So Stage B cheat-watch (i) (no pure-tensor-only gap) and (ii) (the `∀ v` is never specialized) are both respected.
+
+**Checks.** `lake build Prob20` completes successfully (8572 jobs) with the only warnings being the 17 expected `declaration uses 'sorry'` lines from the frozen `Theorems.lean`; my module compiles with zero warnings and every line is ≤ 100 characters. `#print axioms` for all four declarations gives exactly `[propext, Classical.choice, Quot.sound]`. I also confirmed discharge-readiness in a scratch file: `example : @Prob20.theta_mem_intMv = @Prob20.theta_mem_intMv_proof := rfl` typechecks, so the proof carries exactly the frozen type. A `✅` entry with all of this is appended to `PROGRESS.md`; a follow-up note points Stage C5 at `mv_eval_aeval_X` for its `bigP_eval` commutation lemma.
+
+# exit=0 timed_out=False @ 2026-08-06T16:11:46Z

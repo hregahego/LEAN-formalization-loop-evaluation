@@ -1,0 +1,7 @@
+{"timestamp": "2026-08-06T15:18:40Z", "target": "--all", "issues": 2, "duration_sec": 28, "success": false}
+{"timestamp": "2026-08-06T16:18:29Z", "target": "--all", "issues": 2, "duration_sec": 27, "success": false}
+{"timestamp": "2026-08-06T18:43:29Z", "target": "--all", "issues": 2, "duration_sec": 28, "success": false}
+{"timestamp": "2026-08-06T19:17:33Z", "target": "--all", "issues": 2, "duration_sec": 25, "success": false}
+{"timestamp": "2026-08-06T19:27:57Z", "target": "--all", "issues": 0, "duration_sec": 26, "success": true}
+{"timestamp": "2026-08-06T19:29:10Z", "target": "--all", "issues": 0, "duration_sec": 26, "success": true}
+{"timestamp": "2026-08-06T19:41:39Z", "target": "--all", "issues": 0, "duration_sec": 25, "success": true}

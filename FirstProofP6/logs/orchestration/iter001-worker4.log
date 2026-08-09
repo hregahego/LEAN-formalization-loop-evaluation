@@ -1,0 +1,11 @@
+# iter001-worker4  @ 2026-08-09T14:10:26Z
+# cwd: /Users/siyua/dev/opensource-validation-runs/GPTP6-refactors
+# output_format: text
+
+Stage G is complete. **Report:**
+
+I proved frozen theorem #11 in full, as `TreeIrred.exists_reroot_at_proof` in `TreeIrred/Proofs/Reroot/Basic.lean` (468 lines, my file only): `lake build TreeIrred.Proofs.Reroot.Basic` succeeds with zero errors and zero warnings, `#print axioms TreeIrred.exists_reroot_at_proof` is exactly `[propext, Classical.choice, Quot.sound]`, and `example : @exists_reroot_at = @exists_reroot_at_proof := rfl` typechecks against the untouched `Theorems.lean` — no `sorry`, no `axiom`, no `decide`/`native_decide`, no added hypothesis, `u` ranging over all of `verts T` and the form equality on all of `ℕ → ℤ`.
+
+The one substantive deviation from BLUEPRINT G1–G5 is forced by a mathematical fact I hit early and logged as a 📝 decision: since `wt T u` reads the **first** occurrence of the label `u` in `vwts T` and `RTree` does not force distinct labels, BLUEPRINT G2's claim that a one-step `pivot` preserves `wt` is **false** without `(verts T).Nodup` (counterexample `T = .node 0 2 [.node 0 5 [.node 7 3 []]]`, re-rooted at `7`, gives `wt · 0 = 5 ≠ 2`), and Stage G's cheat-watch box forbids adding `Nodup`. So instead of `pivot`/`rerootAt`/`addrOf` I used (i) `reroot_core`, one structural `RTree.recAll` recursion with an accumulator `rest` of subtrees hung off the root, giving a tree rooted at `u` with `vwts` permuted and `edges.map ekey` permuted (`ekey` = the unordered edge, through which both `deg` and the `form` edge summand factor — `deg_eq_of_ekey_perm`, `form_eq_of_perms`), and (ii) a second pass `relabelL`/`exists_relabel` that re-assigns weights among equally-labelled vertices, which repairs the `lookup` (hence `wt`) without moving any label, edge, or the vertex-weight multiset. Guardrails on the 3-vertex path are all by `norm_num` per R4. Both a 📝 and a ✅ entry are appended to `PROGRESS.md`, with the exact hand-off for Stage I (`List.Perm.nodup` + the form equality to transport `Nodup`, `PosDef` and `Irred` from `T` to `T'`).
+
+# exit=0 timed_out=False @ 2026-08-09T14:39:32Z
